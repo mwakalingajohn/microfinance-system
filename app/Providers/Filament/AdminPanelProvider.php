@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('dashboard')
             ->topNavigation()
             ->login()
+            ->spa()
             ->colors([
                 'primary' => Color::Emerald,
             ])
