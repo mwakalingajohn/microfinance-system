@@ -35,7 +35,8 @@ class UserResource extends Resource
                     ->multiple()
                     ->preload()
                     ->relationship("roles", "name")
-                    ->placeholder("Click to add a role")
+                    ->placeholder("Click to add a role"),
+                TextInput::make("password")
             ]);
     }
 
