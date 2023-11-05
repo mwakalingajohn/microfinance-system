@@ -6,6 +6,7 @@ use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
@@ -76,6 +77,19 @@ class AdminPanelProvider extends PanelProvider
                 NavigationItem::make("Tinker")
                     ->url("/tinker")
                     ->group("Settings")
+                    ->openUrlInNewTab()
+            ])
+            ->navigationGroups([
+                NavigationGroup::make("Users")
+                    ->icon("heroicon-o-user-group"),
+                NavigationGroup::make("Loans")
+                    ->icon("heroicon-o-banknotes"),
+                NavigationGroup::make("Reports")
+                    ->icon("heroicon-s-document-chart-bar"),
+                NavigationGroup::make("Configuration")
+                    ->icon("heroicon-s-cog-8-tooth"),
+                NavigationGroup::make("Settings")
+                    ->icon("heroicon-o-user-group"),
             ])
             ->databaseNotifications();
     }

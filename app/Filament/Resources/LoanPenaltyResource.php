@@ -17,7 +17,9 @@ class LoanPenaltyResource extends Resource
 {
     protected static ?string $model = LoanPenalty::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Configuration';
+
+    // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -45,14 +47,14 @@ class LoanPenaltyResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -60,5 +62,5 @@ class LoanPenaltyResource extends Resource
             'create' => Pages\CreateLoanPenalty::route('/create'),
             'edit' => Pages\EditLoanPenalty::route('/{record}/edit'),
         ];
-    }    
+    }
 }

@@ -17,7 +17,9 @@ class OrganisationResource extends Resource
 {
     protected static ?string $model = Organisation::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Users';
+
+    // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -45,14 +47,14 @@ class OrganisationResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -60,5 +62,5 @@ class OrganisationResource extends Resource
             'create' => Pages\CreateOrganisation::route('/create'),
             'edit' => Pages\EditOrganisation::route('/{record}/edit'),
         ];
-    }    
+    }
 }

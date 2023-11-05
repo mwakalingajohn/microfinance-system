@@ -17,7 +17,10 @@ class LoanApplicationResource extends Resource
 {
     protected static ?string $model = LoanApplication::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = "Loans";
+
+    // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -45,14 +48,14 @@ class LoanApplicationResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -60,5 +63,5 @@ class LoanApplicationResource extends Resource
             'create' => Pages\CreateLoanApplication::route('/create'),
             'edit' => Pages\EditLoanApplication::route('/{record}/edit'),
         ];
-    }    
+    }
 }
