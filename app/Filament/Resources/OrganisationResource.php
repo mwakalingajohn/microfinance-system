@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrganisationResource\Pages;
 use App\Filament\Resources\OrganisationResource\RelationManagers;
+use App\Library\Enums\OrganisationType;
 use App\Models\Organisation;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,40 +13,36 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Miguilim\FilamentAutoPanel\AutoResource;
 
-class OrganisationResource extends Resource
+class OrganisationResource extends AutoResource
 {
     protected static ?string $model = Organisation::class;
 
     protected static ?string $navigationGroup = 'Users';
 
-    // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static array $enumDictionary = [
+        "type" => OrganisationType::data,
+    ];
 
-    public static function form(Form $form): Form
+    protected static array $visibleColumns = [
+
+    ];
+
+    protected static array $searchableColumns = [];
+
+    public static function getFilters(): array
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return [
+            //
+        ];
     }
 
-    public static function table(Table $table): Table
+    public static function getActions(): array
     {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        return [
+            //
+        ];
     }
 
     public static function getRelations(): array
@@ -55,12 +52,49 @@ class OrganisationResource extends Resource
         ];
     }
 
-    public static function getPages(): array
+    public static function getHeaderWidgets(): array
     {
         return [
-            'index' => Pages\ListOrganisations::route('/'),
-            'create' => Pages\CreateOrganisation::route('/create'),
-            'edit' => Pages\EditOrganisation::route('/{record}/edit'),
+            'list' => [
+                //
+            ],
+            'view' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getFooterWidgets(): array
+    {
+        return [
+            'list' => [
+                //
+            ],
+            'view' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getColumnsOverwrite(): array
+    {
+        return [
+            'table' => [
+                //
+            ],
+            'form' => [
+                //
+            ],
+            'infolist' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getExtraPages(): array
+    {
+        return [
+            //
         ];
     }
 }

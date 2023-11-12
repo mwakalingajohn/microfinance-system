@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\LoanChargeResource\Pages;
 use App\Filament\Resources\LoanChargeResource\RelationManagers;
+use App\Library\Enums\DeductibleValueType;
+use App\Library\Enums\LoanChargeSource;
 use App\Models\LoanCharge;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,40 +14,37 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Miguilim\FilamentAutoPanel\AutoResource;
 
-class LoanChargeResource extends Resource
+class LoanChargeResource extends AutoResource
 {
     protected static ?string $model = LoanCharge::class;
 
     protected static ?string $navigationGroup = 'Configuration';
 
-    // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
+    protected static array $enumDictionary = [
+        "type" => DeductibleValueType::data,
+        "from" => LoanChargeSource::data
+    ];
+
+    protected static array $visibleColumns = [
+    ];
+
+    protected static array $searchableColumns = [];
+
+    public static function getFilters(): array
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return [
+            //
+        ];
     }
 
-    public static function table(Table $table): Table
+    public static function getActions(): array
     {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        return [
+            //
+        ];
     }
 
     public static function getRelations(): array
@@ -55,12 +54,49 @@ class LoanChargeResource extends Resource
         ];
     }
 
-    public static function getPages(): array
+    public static function getHeaderWidgets(): array
     {
         return [
-            'index' => Pages\ListLoanCharges::route('/'),
-            'create' => Pages\CreateLoanCharge::route('/create'),
-            'edit' => Pages\EditLoanCharge::route('/{record}/edit'),
+            'list' => [
+                //
+            ],
+            'view' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getFooterWidgets(): array
+    {
+        return [
+            'list' => [
+                //
+            ],
+            'view' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getColumnsOverwrite(): array
+    {
+        return [
+            'table' => [
+                //
+            ],
+            'form' => [
+                //
+            ],
+            'infolist' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getExtraPages(): array
+    {
+        return [
+            //
         ];
     }
 }

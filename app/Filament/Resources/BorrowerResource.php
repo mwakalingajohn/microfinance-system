@@ -2,43 +2,51 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BorrowerResource\Pages;
+use App\Library\Enums\MaritalStatus;
+use App\Library\Enums\Occupation;
 use App\Models\Borrower;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
-class BorrowerResource extends Resource
+use Miguilim\FilamentAutoPanel\AutoResource;
+
+class BorrowerResource extends AutoResource
 {
     protected static ?string $model = Borrower::class;
 
     protected static ?string $navigationGroup = 'Users';
 
-    public static function form(Form $form): Form
+    protected static array $enumDictionary = [
+        "marital_status" => MaritalStatus::data,
+        "occupation" => Occupation::data
+    ];
+
+    protected static array $visibleColumns = [
+        // "user_id",
+        "organization_id",
+        'first_name',
+        'middle_name',
+        'last_name',
+        'email',
+        'sex',
+        "street_id",
+        'birthdate',
+        'occupation',
+        'marital_status',
+    ];
+
+    protected static array $searchableColumns = [];
+
+    public static function getFilters(): array
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return [
+            //
+        ];
     }
 
-    public static function table(Table $table): Table
+    public static function getActions(): array
     {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        return [
+            //
+        ];
     }
 
     public static function getRelations(): array
@@ -48,12 +56,49 @@ class BorrowerResource extends Resource
         ];
     }
 
-    public static function getPages(): array
+    public static function getHeaderWidgets(): array
     {
         return [
-            'index' => Pages\ListBorrowers::route('/'),
-            'create' => Pages\CreateBorrower::route('/create'),
-            'edit' => Pages\EditBorrower::route('/{record}/edit'),
+            'list' => [
+                //
+            ],
+            'view' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getFooterWidgets(): array
+    {
+        return [
+            'list' => [
+                //
+            ],
+            'view' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getColumnsOverwrite(): array
+    {
+        return [
+            'table' => [
+                //
+            ],
+            'form' => [
+                //
+            ],
+            'infolist' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getExtraPages(): array
+    {
+        return [
+            //
         ];
     }
 }

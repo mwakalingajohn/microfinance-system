@@ -12,40 +12,34 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Miguilim\FilamentAutoPanel\AutoResource;
 
-class BranchResource extends Resource
+class BranchResource extends AutoResource
 {
     protected static ?string $model = Branch::class;
 
     protected static ?string $navigationGroup = 'Configuration';
 
-    // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static array $enumDictionary = [
+    ];
 
-    public static function form(Form $form): Form
+    protected static array $visibleColumns = [
+    ];
+
+    protected static array $searchableColumns = [];
+
+    public static function getFilters(): array
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return [
+            //
+        ];
     }
 
-    public static function table(Table $table): Table
+    public static function getActions(): array
     {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        return [
+            //
+        ];
     }
 
     public static function getRelations(): array
@@ -55,12 +49,49 @@ class BranchResource extends Resource
         ];
     }
 
-    public static function getPages(): array
+    public static function getHeaderWidgets(): array
     {
         return [
-            'index' => Pages\ListBranches::route('/'),
-            'create' => Pages\CreateBranch::route('/create'),
-            'edit' => Pages\EditBranch::route('/{record}/edit'),
+            'list' => [
+                //
+            ],
+            'view' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getFooterWidgets(): array
+    {
+        return [
+            'list' => [
+                //
+            ],
+            'view' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getColumnsOverwrite(): array
+    {
+        return [
+            'table' => [
+                //
+            ],
+            'form' => [
+                //
+            ],
+            'infolist' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getExtraPages(): array
+    {
+        return [
+            //
         ];
     }
 }
