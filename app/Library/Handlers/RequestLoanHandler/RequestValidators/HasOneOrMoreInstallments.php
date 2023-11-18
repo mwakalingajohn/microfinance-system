@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators;
+namespace App\Library\Handlers\RequestLoanHandler\RequestValidators;
 
 use App\LoanRequestLog;
 use App\Repositories\UserRepository;

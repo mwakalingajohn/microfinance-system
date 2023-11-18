@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\TransactionHandlers\RequestLoanHandler\TransactionProcessors;
+namespace App\Library\Handlers\RequestLoanHandler\TransactionProcessors;
 
 use App\LoanProduct;
 use App\Repositories\UserRepository;

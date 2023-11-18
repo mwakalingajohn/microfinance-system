@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\TransactionHandlers;
+namespace App\Library\Handlers;
 
 use App\Events\LoanCreated;
 use App\Exceptions\LoanInstallmentAmountException;
@@ -15,18 +15,18 @@ use App\Repositories\UserMlipaTransactionRepository;
 use App\Repositories\UserRepository;
 use App\User;
 use App\Utils\MlipaApi\MlipaTransactionHandler;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\DoesntHaveLoanProduct;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\HasOneOrMoreInstallments;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\IsNotAllowedToTakeLoan;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\IsNotAllowedToTakePartialLoan;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\IsNotAllowedToTopUp;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\IsNotQualifiedForLoan;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\IsRequestedAmountExceedingLoanLimit;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\IsRequestedAmountLessThanBalance;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\IsRequestedLoanLessThanMinimumAllowed;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\IsUserLocked;
-use App\Utils\TransactionHandlers\RequestLoanHandler\RequestValidators\RequestValidator;
-use App\Utils\TransactionHandlers\RequestLoanHandler\TransactionProcessors\TransactionProcessor;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\DoesntHaveLoanProduct;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\HasOneOrMoreInstallments;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\IsNotAllowedToTakeLoan;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\IsNotAllowedToTakePartialLoan;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\IsNotAllowedToTopUp;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\IsNotQualifiedForLoan;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\IsRequestedAmountExceedingLoanLimit;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\IsRequestedAmountLessThanBalance;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\IsRequestedLoanLessThanMinimumAllowed;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\IsUserLocked;
+use App\Library\Handlers\RequestLoanHandler\RequestValidators\RequestValidator;
+use App\Library\Handlers\RequestLoanHandler\TransactionProcessors\TransactionProcessor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log as FacadesLog;
 
