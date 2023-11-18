@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Handlers\RequestLoanHandler\TransactionProcessors;
+namespace App\Utils\TransactionHandlers\RequestLoanHandler\TransactionProcessors;
 
 use App\Calculations\InstallmentCalculations;
 use App\Exceptions\LoanInstallmentAmountException;

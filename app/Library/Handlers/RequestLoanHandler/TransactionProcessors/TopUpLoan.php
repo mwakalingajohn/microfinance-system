@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Library\Handlers\RequestLoanHandler\TransactionProcessors;
+namespace App\Utils\TransactionHandlers\RequestLoanHandler\TransactionProcessors;
 
 use App\LoanProduct;
 use App\Repositories\UserRepository;
 use App\User;
-use App\Library\Handlers\RepayLoanHandler;
+use App\Utils\TransactionHandlers\RepayLoanHandler;
 
 class TopUpLoan implements Processor
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Handlers\RequestLoanHandler\ChargeCalculators;
+namespace App\Utils\TransactionHandlers\RequestLoanHandler\ChargeCalculators;
 
 use App\Charge;
 use App\LoanProduct;
