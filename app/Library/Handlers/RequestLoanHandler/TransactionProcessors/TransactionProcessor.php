@@ -2,9 +2,7 @@
 
 namespace App\Library\Handlers\RequestLoanHandler\TransactionProcessors;
 
-use App\LoanProduct;
-use App\Repositories\UserRepository;
-use App\User;
+use App\Models\LoanProduct;
 
 class TransactionProcessor
 {
@@ -36,7 +34,7 @@ class TransactionProcessor
     /**
      * Check what type is current loan
      */
-    public function checkLoanType(LoanProduct $loanProduct, UserRepository $userRepository, $numberOfInstallments, $amount)
+    public function checkLoanType(LoanProduct $loanProduct, $amount)
     {
         foreach (self::LOAN_TYPES as $key => $loanType) {
             $loanClass = self::LOAN_TYPES[$key];

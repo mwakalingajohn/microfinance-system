@@ -6,7 +6,85 @@ use App\LoanProduct;
 use App\Repositories\UserRepository;
 use App\User;
 
-class NormalLoan implements Processor
+class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+NormalLoan implements Processor
 {
     use CanProcessTransaction;
 
