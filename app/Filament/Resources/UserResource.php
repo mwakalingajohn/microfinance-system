@@ -61,6 +61,7 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Impersonate::make()
+                ->redirectTo('dashboard')
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

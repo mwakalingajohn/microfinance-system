@@ -19,4 +19,14 @@ class Borrower extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the organization that owns the Borrower
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organisation::class);
+    }
 }

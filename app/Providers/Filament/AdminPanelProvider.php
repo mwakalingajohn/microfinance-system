@@ -71,7 +71,8 @@ class AdminPanelProvider extends PanelProvider
                     )
                     ->enableTwoFactorAuthentication(
                         force: false,
-                    )
+                    ),
+                \EightyNine\Approvals\ApprovalPlugin::make()
             ])
             ->navigationItems([
                 NavigationItem::make("Tinker")
@@ -80,17 +81,22 @@ class AdminPanelProvider extends PanelProvider
                     ->openUrlInNewTab()
             ])
             ->navigationGroups([
-                NavigationGroup::make("Users")
-                    ->icon("heroicon-o-user-group"),
                 NavigationGroup::make("Loans")
                     ->icon("heroicon-o-banknotes"),
                 NavigationGroup::make("Reports")
                     ->icon("heroicon-s-document-chart-bar"),
+                NavigationGroup::make("Users")
+                    ->icon("heroicon-o-user-group"),
                 NavigationGroup::make("Configuration")
                     ->icon("heroicon-s-cog-8-tooth"),
                 NavigationGroup::make("Settings")
                     ->icon("heroicon-o-user-group"),
             ])
+            ->colors([
+                'primary' => '#010BFD1F',
+            ])
+            ->brandLogo(asset('img/logo.png'))
+            ->brandLogoHeight("56px")
             ->databaseNotifications();
     }
 }
