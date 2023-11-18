@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LoanApplicationResource\Pages;
 use App\Filament\Resources\LoanApplicationResource\RelationManagers;
 use App\Models\LoanApplication;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use EightyNine\Approvals\Tables\Columns\ApprovalStatusColumn;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
@@ -18,14 +19,34 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class LoanApplicationResource extends Resource
+class LoanApplicationResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = LoanApplication::class;
 
 
     protected static ?string $navigationGroup = "Loans";
 
-    // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'restore',
+            'restore_any',
+            'replicate',
+            'reorder',
+            'delete',
+            'delete_any',
+            'force_delete',
+            'force_delete_any',
+            'disburse',
+            'repay',
+            'recalculate',
+            'cancel'
+        ];
+    }
 
     public static function form(Form $form): Form
     {
