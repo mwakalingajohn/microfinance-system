@@ -93,7 +93,7 @@ class AdminPanelProvider extends PanelProvider
                     ->icon("heroicon-o-user-group"),
             ])
             ->colors([
-                'primary' => '#010BFD1F',
+                'primary' => '#1f76bb',
             ])
             ->brandLogo(asset('img/logo.png'))
             ->brandLogoHeight("56px")
