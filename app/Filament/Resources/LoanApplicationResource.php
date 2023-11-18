@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\LoanApplicationResource\Pages;
 use App\Filament\Resources\LoanApplicationResource\RelationManagers;
+use App\Library\Enums\LoanDisbursementMethod;
+use App\Library\Services\LoanService;
 use App\Models\LoanApplication;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use EightyNine\Approvals\Tables\Columns\ApprovalStatusColumn;
@@ -11,6 +13,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
@@ -88,6 +91,40 @@ class LoanApplicationResource extends Resource implements HasShieldPermissions
                 ...\EightyNine\Approvals\Tables\Actions\ApprovalActions::make(
                     // define your actions here that will appear once approval is completed
                     Action::make("Disburse")
+                        ->fillForm(fn (LoanApplication $record): array => [
+                            "amount" => $record->amount
+                        ])
+                        ->form([
+                            TextInput::make("loan_application_id")
+                                ->required()
+                                ->hidden(true),
+                            TextInput::make("amount")
+                                ->numeric()
+                                ->readOnly()
+                                ->required(),
+                            Select::make("method")
+                                ->options(LoanDisbursementMethod::associativeValues())
+                                ->native(false)
+                                ->required()
+                                ->default(LoanDisbursementMethod::Cash->value)
+                        ])
+                        ->action(function (LoanApplication $record, array $data): void {
+                            $response = (new LoanService)->disburse($record, $data["method"]);
+                            if ($response->success) {
+                                Notification::make()
+                                    ->title('Disbursement successful')
+                                    ->success()
+                                    ->send();
+                            } else {
+                                Notification::make()
+                                    ->title('Disbursement failed')
+                                    ->danger()
+                                    ->send();
+                            }
+                        })
+                        ->modalDescription("Desburse the amount to user")
+                        ->slideOver()
+                        ->modalWidth("md")
                 ),
             ])
             ->bulkActions([

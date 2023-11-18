@@ -3,5 +3,8 @@
 @config 'tailwind.config.js';
 
 :root{
-    font-size: 15px;
+    font-size: 16px;
+}
+#impersonate-banner {
+    z-index: 0 !important;
 }

@@ -6,6 +6,7 @@ use EightyNine\Approvals\Models\ApprovableModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class LoanApplication extends ApprovableModel
 {
@@ -38,5 +39,15 @@ class LoanApplication extends ApprovableModel
     public function loanProduct(): BelongsTo
     {
         return $this->belongsTo(LoanProduct::class);
+    }
+
+    /**
+     * Get the loan associated with the LoanApplication
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function loan(): HasOne
+    {
+        return $this->hasOne(Loan::class);
     }
 }
