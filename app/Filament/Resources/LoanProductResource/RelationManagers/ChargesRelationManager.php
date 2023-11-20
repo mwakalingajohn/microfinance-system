@@ -12,7 +12,7 @@ class ChargesRelationManager extends AutoRelationManager
 {
     protected static string $relatedResource = LoanProductResource::class;
 
-    protected static string $relationship = 'loanCharges';
+    protected static string $relationship = 'charges';
 
     protected static ?string $recordTitleAttribute = 'label';
 

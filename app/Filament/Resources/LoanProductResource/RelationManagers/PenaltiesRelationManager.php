@@ -10,7 +10,7 @@ class PenaltiesRelationManager extends AutoRelationManager
 {
     protected static string $relatedResource = LoanProductResource::class;
 
-    protected static string $relationship = 'loanPenalties';
+    protected static string $relationship = 'penalties';
 
     protected static ?string $recordTitleAttribute = 'label';
 

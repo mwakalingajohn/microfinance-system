@@ -31,6 +31,16 @@ class Loan extends Model
     ];
 
     /**
+     * Get all of the disbursements for the Loan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function disbursements(): HasMany
+    {
+        return $this->hasMany(LoanDisbursement::class);
+    }
+
+    /**
      * Get the loanApplication that owns the Loan
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -48,5 +58,15 @@ class Loan extends Model
     public function installments(): HasMany
     {
         return $this->hasMany(LoanInstallment::class);
+    }
+
+    /**
+     * Get all of the charges for the Loan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function charges(): HasMany
+    {
+        return $this->hasMany(LoanCharge::class);
     }
 }
