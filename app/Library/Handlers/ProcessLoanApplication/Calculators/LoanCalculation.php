@@ -3,6 +3,7 @@
 namespace App\Library\Handlers\ProcessLoanApplication\Calculators;
 
 use App\Library\DTOs\Installment;
+use App\Models\Loan;
 use App\Models\LoanApplication;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +26,8 @@ class LoanCalculation extends Model
         public ?array $data = [],
         public ?float $disbursementAmount = 0,
         public ?float $installmentBeforeCharges = 0,
-        public ?float $principal = 0
+        public ?float $principal = 0,
+        public ?Loan $loan = null
     ) {
     }
 }

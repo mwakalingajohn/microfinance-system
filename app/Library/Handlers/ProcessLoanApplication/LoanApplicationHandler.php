@@ -60,7 +60,8 @@ class LoanApplicationHandler
                 success: true,
                 message: "Loan application successful",
                 data: [
-                    "loanCalculation" => $loanCalculation
+                    "loanCalculation" => $loanCalculation,
+                    "loan" => $loanCalculation->loan
                 ]
             );
         }, function (Throwable $throwable) {
@@ -186,6 +187,13 @@ class LoanApplicationHandler
         }
 
         // update the final loan application status
+        $this->loanApplication->update([
+            "status" => LoanApplicationStatus::Disbursed,
+            "message" => "Loan disbursed successfully",
+            "loan_id" => $loan->id
+        ]);
+
+        $loanCalculation->loan = $loan;
         return $loan;
     }
 

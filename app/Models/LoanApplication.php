@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Casts\Json;
 use EightyNine\Approvals\Models\ApprovableModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -23,7 +22,8 @@ class LoanApplication extends ApprovableModel
         "number_of_installments",
         "interest",
         "branch_id",
-        "loan_officer_id"
+        "loan_officer_id",
+        "loan_id"
     ];
 
     protected $casts = [

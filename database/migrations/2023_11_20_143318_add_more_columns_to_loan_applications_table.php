@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::table('loan_applications', function (Blueprint $table) {
             $table->string('status', 100)->nullable()->after("loan_product_details");
+            $table->text('comment')->nullable()->after("status");
+            $table->unsignedBigInteger("loan_id")->nullable()->after("id");
         });
     }
 
@@ -23,6 +25,8 @@ return new class extends Migration
     {
         Schema::table('loan_applications', function (Blueprint $table) {
             $table->dropColumn('status');
+            $table->dropColumn('comment');
+            $table->dropColumn('loan_id');
         });
     }
 };
