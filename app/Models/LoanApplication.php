@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Json;
 use EightyNine\Approvals\Models\ApprovableModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,14 @@ class LoanApplication extends ApprovableModel
         "loan_product_name",
         "loan_product_details",
         "amount",
+        "number_of_installments",
+        "interest",
+        "branch_id",
+        "loan_officer_id"
+    ];
+
+    protected $casts = [
+        "loan_product_details" => Json::class
     ];
 
     /**
@@ -29,6 +38,16 @@ class LoanApplication extends ApprovableModel
     public function borrower(): BelongsTo
     {
         return $this->belongsTo(Borrower::class);
+    }
+
+    /**
+     * Get the branch that owns the LoanApplication
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     /**

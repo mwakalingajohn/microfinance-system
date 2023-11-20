@@ -10,6 +10,8 @@
     "require": {
         "php": "^8.1",
         "bezhansalleh/filament-shield": "^3.0",
+        "calebporzio/sushi": "^2.4",
+        "doctrine/dbal": "^3.7",
         "eightynine/filament-approvals": "^3.0",
         "filament/filament": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.2",
@@ -36,7 +38,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Library/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

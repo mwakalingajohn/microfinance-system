@@ -12,7 +12,6 @@ enum CalculatablePeriod: string implements ShouldReturnValues
         "Week" => "Week",
         "Month" => "Month",
         "Quarter" => "Quarter",
-        "Semi Annual" => "Semi Annual",
         "Year" => "Year",
     ];
 
@@ -22,5 +21,4 @@ enum CalculatablePeriod: string implements ShouldReturnValues
     case Month = "Month";
     case Year = "Year";
     case Quarter = "Quarter";
-    case SemiAnnual = "Semi Annual";
-    }
+}

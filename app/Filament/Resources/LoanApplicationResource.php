@@ -4,15 +4,21 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\LoanApplicationResource\Pages;
 use App\Filament\Resources\LoanApplicationResource\RelationManagers;
+use App\Library\Enums\InterestPeriod;
 use App\Library\Enums\LoanDisbursementMethod;
 use App\Library\Services\LoanService;
 use App\Models\LoanApplication;
+use App\Models\LoanProduct;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use EightyNine\Approvals\Tables\Columns\ApprovalStatusColumn;
 use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -55,21 +61,46 @@ class LoanApplicationResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                Select::make("borrower_id")
-                    ->relationship(name: "borrower", titleAttribute: "last_name")
-                    ->native(false)
-                    ->searchable()
-                    ->required()
-                    ->preload(),
-                Select::make("loan_product_id")
-                    ->relationship(name: "loanProduct", titleAttribute: "label")
-                    ->native(false)
-                    ->searchable()
-                    ->required()
-                    ->preload(),
-                TextInput::make("amount")
-                    ->numeric()
-                    ->required()
+                Section::make()
+                    ->columns(3)
+                    ->schema([
+                        Select::make("borrower_id")
+                            ->relationship(name: "borrower", titleAttribute: "last_name")
+                            ->native(false)
+                            ->searchable()
+                            ->required()
+                            ->preload(),
+                        Select::make("branch_id")
+                            ->relationship(name: "branch", titleAttribute: "name")
+                            ->native(false)
+                            ->searchable()
+                            ->preload(),
+                        Select::make("loan_product_id")
+                            ->relationship(name: "loanProduct", titleAttribute: "label")
+                            ->native(false)
+                            ->searchable()
+                            ->required()
+                            ->afterStateUpdated(function (Set $set, ?string $state) {
+                                $set('interest', LoanProduct::find($state)?->default_interest_rate);
+                                $set('amount', number_format(LoanProduct::find($state)?->minimum_principal));
+                                $set('number_of_installments', 1);
+                            })
+                            ->live()
+                            ->preload(),
+                        TextInput::make("amount")
+                            ->prefix("TZS")
+                            ->mask(moneyMask())
+                            ->required(),
+                        TextInput::make("number_of_installments")
+                            ->numeric()
+                            ->label("Repay in")
+                            ->suffix(fn (Get $get) => InterestPeriod::from(LoanProduct::find($get("loan_product_id"))?->repayment_period)->inPlural())
+                            ->required(),
+                        TextInput::make("interest")
+                            ->numeric()
+                            ->required()
+                            ->suffix(fn (Get $get) => LoanProduct::find($get("loan_product_id"))?->interest_period),
+                    ])
             ]);
     }
 
@@ -77,8 +108,7 @@ class LoanApplicationResource extends Resource implements HasShieldPermissions
     {
         return $table
             ->columns([
-                TextColumn::make("borrower.first_name"),
-                TextColumn::make("borrower.last_name"),
+                TextColumn::make("borrower.first_name")->label("Borrower"),
                 TextColumn::make("loanProduct.label"),
                 TextColumn::make("amount")->money("Tsh"),
                 ApprovalStatusColumn::make("approvalStatus.status")
@@ -101,12 +131,16 @@ class LoanApplicationResource extends Resource implements HasShieldPermissions
                             TextInput::make("amount")
                                 ->numeric()
                                 ->readOnly()
-                                ->required(),
+                                ->required()
+                                ->prefix("TZS"),
                             Select::make("method")
                                 ->options(LoanDisbursementMethod::associativeValues())
                                 ->native(false)
                                 ->required()
-                                ->default(LoanDisbursementMethod::Cash->value)
+                                ->default(LoanDisbursementMethod::Cash->value),
+                            DateTimePicker::make("disbursed_on")
+                                ->required()
+                                ->label("Disbursement Date")
                         ])
                         ->action(function (LoanApplication $record, array $data): void {
                             $response = (new LoanService)->disburse($record, $data["method"]);

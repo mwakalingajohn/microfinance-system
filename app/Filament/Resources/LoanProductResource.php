@@ -30,8 +30,7 @@ class LoanProductResource extends AutoResource
         "interest_period" => InterestPeriod::data,
         "repayment_period" => InterestPeriod::data,
         "calculation_method" => LoanCalculationMethod::data,
-        "due_date_method" => DueDateMethod::data,
-
+        "due_date_method" => DueDateMethod::data
     ];
 
     protected static array $visibleColumns = [];

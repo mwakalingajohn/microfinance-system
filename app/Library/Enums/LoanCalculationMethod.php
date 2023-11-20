@@ -9,10 +9,10 @@ enum LoanCalculationMethod: string implements ShouldReturnValues
     public const data = [
         'Flat' => 'Flat',
         'ReducingBalanceEqualInstallments' => 'Reducing balance equal installments',
-        'ReducingBalanceEqualPrincipal' => 'Reducing balance equal principal'
+        // 'ReducingBalanceEqualPrincipal' => 'Reducing balance equal principal'
     ];
 
     case Flat = "Flat";
-    case ReducingBalanceEqualInstallments = "Reducing balance equal installments";
-    case ReducingBalanceEqualPrincipal = "Reducing balance equal principal";
+    case ReducingBalanceEqualInstallments = "ReducingBalanceEqualInstallments";
+    // case ReducingBalanceEqualPrincipal = "Reducing balance equal principal";
 }

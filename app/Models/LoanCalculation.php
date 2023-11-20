@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models;
+
+use App\Library\DTOs\Installment;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class LoanCalculation extends Model
+{
+    use HasFactory;
+    use \Sushi\Sushi;
+
+    public const LOAN_CALCULATION_DATA_SESSION_KEY = "loan_calculation_session";
+
+    protected $schema = [
+        'loanBalance' => "float",
+        'principal' => "float",
+        'interest' => "float",
+        'installment' => "float",
+        'due_date' => "float",
+        'charges' => "float",
+    ];
+
+    public function getRows()
+    {
+        info("refreshing", []);
+        $loanCalculationData = session(self::LOAN_CALCULATION_DATA_SESSION_KEY, null);
+        if ($loanCalculationData) {
+            return collect($loanCalculationData->installments)
+                ->map(fn (Installment $installment) => $installment->toArray())
+                ->toArray();
+        }
+        return [];
+    }
+}

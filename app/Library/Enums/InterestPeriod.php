@@ -7,13 +7,26 @@ enum InterestPeriod: string implements ShouldReturnValues
     use ReturnsValues;
 
     public const data = [
-        'Daily' => 'per day',
-        'Weekly' => 'per week',
-        'Monthly' => 'per month',
+        'Daily' => 'Daily',
+        'Weekly' => 'Weekly',
+        'Monthly' => 'Monthly',
+        'Yearly' => 'Yearly',
     ];
 
-    case Daily = 'per day';
-    case Weekly = 'per week';
-    case Monthly = 'per month';
+    case Daily = 'Daily';
+    case Weekly = 'Weekly';
+    case Monthly = 'Monthly';
+    case Yearly = 'Yearly';
+    case Null = "0";
 
+    public function inPlural()
+    {
+        return match ($this) {
+            self::Daily => 'Days',
+            self::Weekly => 'Weeks',
+            self::Monthly => 'Months',
+            self::Yearly => 'Years',
+            default => null
+        };
+    }
 }

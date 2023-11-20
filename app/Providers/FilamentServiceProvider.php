@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Filament\Forms\Components\Select;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +26,8 @@ class FilamentServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Select::configureUsing(function (Select $select): void {
+            $select->native(false);
+        });
     }
 }
