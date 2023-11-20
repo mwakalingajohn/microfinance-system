@@ -61,6 +61,16 @@ class LoanApplication extends ApprovableModel
     }
 
     /**
+     * Get the loanOfficer that owns the LoanApplication
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function loanOfficer(): BelongsTo
+    {
+        return $this->belongsTo(loanOfficer::class);
+    }
+
+    /**
      * Get the loan associated with the LoanApplication
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

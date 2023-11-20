@@ -15,9 +15,9 @@ class LoanProduct extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function loanCharges(): BelongsToMany
+    public function charges(): BelongsToMany
     {
-        return $this->belongsToMany(LoanCharge::class);
+        return $this->belongsToMany(Charge::class);
     }
 
     /**
@@ -25,8 +25,8 @@ class LoanProduct extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function loanPenalties(): BelongsToMany
+    public function penalties(): BelongsToMany
     {
-        return $this->belongsToMany(LoanPenalty::class);
+        return $this->belongsToMany(Penalty::class);
     }
 }

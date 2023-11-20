@@ -34,7 +34,7 @@ class CalculateCharges
     public function applyCharges(LoanCalculation $loanCalculation): LoanCalculation
     {
         $loanCharges = $loanCalculation->loanCharges;
-        $chargeCount = count($loanCharges);
+        $installmentCount = count($loanCalculation->installments);
 
         foreach ($loanCharges as $charge) {
             $charge = new Fluent($charge);
@@ -53,8 +53,8 @@ class CalculateCharges
                     break;
                 case LoanChargeDestination::LastInstallment->value:
                     $loanCalculation->loanInstallments = collect($loanCalculation->loanInstallments)
-                        ->map(function ($installment, $index) use ($charge, $chargeCount) {
-                            if ($index == $chargeCount) {
+                        ->map(function ($installment, $index) use ($charge, $installmentCount) {
+                            if ($index == ($installmentCount - 1)) {
                                 $installment->charges += $charge->amount;
                                 $installment->installment += $charge->amount;
                             }

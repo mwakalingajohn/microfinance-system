@@ -9,7 +9,7 @@ class Installment
         public mixed $principal = 0,
         public mixed $interest = 0,
         public mixed $installment = 0,
-        public mixed $due_date = 0,
+        public mixed $dueDate = 0,
         public mixed $charges = 0
     ) {
     }
@@ -21,7 +21,7 @@ class Installment
             "principal" => $this->principal,
             "interest" => $this->interest,
             "installment" => $this->installment,
-            "due_date" => $this->due_date,
+            "due_date" => $this->dueDate,
             "charges" => $this->charges
         ];
     }

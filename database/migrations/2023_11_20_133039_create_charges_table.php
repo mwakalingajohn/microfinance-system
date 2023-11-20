@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loan_product_penalty', function (Blueprint $table) {
+        Schema::create('charges', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("penalty_id");
-            $table->unsignedBigInteger("loan_product_id");
+            $table->string("of")->nullable();
+            $table->string('label', 100)->nullable();
+            $table->string('on', 100)->nullable();
+            $table->string('type', 100)->nullable();
+            $table->string('value', 100)->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('loan_product_penalty');
+        Schema::dropIfExists('charges');
     }
 };

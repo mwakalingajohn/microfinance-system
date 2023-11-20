@@ -4,14 +4,17 @@ namespace App\Library\Handlers\ProcessLoanApplication;
 
 use App\Library\DTOs\InternalResponse;
 use App\Library\Enums\LoanApplicationStatus;
+use App\Library\Enums\LoanStatus;
 use App\Library\Handlers\ProcessLoanApplication\Calculators\CalculateCharges;
 use App\Library\Handlers\ProcessLoanApplication\Calculators\CalculateInstallments;
 use App\Library\Handlers\ProcessLoanApplication\Calculators\LoanCalculation;
 use App\Library\Handlers\ProcessLoanApplication\Validators\ItHasNotBeenProcessed;
 use App\Library\Handlers\ProcessLoanApplication\Validators\ItIsFullyApproved;
 use App\Library\Traits\HasInternalResponse;
+use App\Models\Borrower;
 use App\Models\Loan;
 use App\Models\LoanApplication;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Pipeline;
 use Throwable;
 
@@ -107,11 +110,69 @@ class LoanApplicationHandler
      */
     private function store(LoanCalculation $loanCalculation): Loan
     {
-        // save the loan to DB
+        $loan = null;
+        DB::transcation(function () use ($loanCalculation, &$loan) {
+            $loanApplication = $this->loanApplication;
+            $borrower = $loanApplication->borrower;
+            $loanProduct = $loanApplication->loanProduct;
+            $organisation = $borrower->organisation;
+            $loanOfficer = $loanApplication->loanOfficer;
 
-        // save the loan installments to the DB
+            $principal = $loanApplication->amount;
+            $interest = collect($loanCalculation->loanInstallments)->sum("interest");
+            $charges = collect($loanCalculation->loanCharges)->sum("charges");
+            $total_charges = $interest + $charges;
+            $total_loan = $principal + $total_charges;
 
-        // save the loan charges for each loan and loan installment to the DB
+            // save the loan to DB
+            $loan = Loan::create([
+                "loan_officer_id" => $loanOfficer->id,
+                "loan_officer_name" => $loanOfficer->name,
+                "borrower_id" => $borrower->id,
+                "borrower_name" => $borrower->name,
+                "loan_product_id" => $loanProduct->id,
+                "loan_product_name" => $loanProduct->label,
+                "interest_rate" => $loanApplication->interest,
+                "organisation_id" => $organisation->id,
+                "organisation_name" => $organisation->name,
+                "number_of_installments" => $loanApplication->number_of_installments,
+                "principal" => $principal,
+                "interest" => $interest,
+                "charges" => $charges,
+                "total_charges" => $total_charges,
+                "total_loan" => $total_loan,
+                "status" => LoanStatus::Active->value,
+            ]);
+
+            // save the installments
+            foreach ($loanCalculation->loanInstallments as $installment) {
+                $loan->installments()->create([
+                    "loan_officer_id" => $loanOfficer->id,
+                    "loan_officer_name" => $loanOfficer->name,
+                    "borrower_id" => $borrower->id,
+                    "borrower_name" => $borrower->name,
+                    "loan_product_id" => $loanProduct->id,
+                    "loan_product_name" => $loanProduct->label,
+                    "interest_rate" => $loanApplication->interest,
+                    "organisation_id" => $organisation->id,
+                    "organisation_name" => $organisation->name,
+                    "loan_balance" => $installment->loanBalance,
+                    "principal"=> $installment->principal,
+                    "interest" => $installment->interest,
+                    "charges" => $installment->charges,
+                    "installment" => $installment->installment,
+                    "penalty" => 0,
+                    "remaining_principal" => $installment->principal,
+                    "remaining_interest" => $installment->interest,
+                    "remaining_charges" => $installment->charges,
+                    "remaining_penalty" => 0,
+                    "remaining_installment" => $installment->installment,
+                    "due_date" => $installment->dueDate,
+                ]);
+            }
+
+            // save the loan charges for each loan and loan installment to the DB
+        });
         return new Loan;
     }
 

@@ -82,7 +82,7 @@ class CalculateInstallments
                 principal: round($principal, 2),
                 interest: round($installment_interest, 2),
                 installment: round($principal + $installment_interest, 2),
-                due_date: $dueDate,
+                dueDate: $dueDate,
             );
             $loan_balance = $loan_balance - $principal;
         }
@@ -132,7 +132,7 @@ class CalculateInstallments
                 principal: round($emi - $installment_interest, 2),
                 interest: round($installment_interest, 2),
                 installment: round($emi, 2),
-                due_date: $dueDate
+                dueDate: $dueDate
             );
 
             $loan_balance = $loan_balance - $installment_principal;

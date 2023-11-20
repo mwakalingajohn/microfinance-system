@@ -2,25 +2,16 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\LoanPenaltyResource\Pages;
-use App\Filament\Resources\LoanPenaltyResource\RelationManagers;
 use App\Library\Enums\CalculatablePeriod;
 use App\Library\Enums\DeductibleValueType;
 use App\Library\Enums\Penaltibles;
 use App\Library\Enums\PenaltyMethod;
-use App\Models\LoanPenalty;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Penalty;
 use Miguilim\FilamentAutoPanel\AutoResource;
 
-class LoanPenaltyResource extends AutoResource
+class PenaltyResource extends AutoResource
 {
-    protected static ?string $model = LoanPenalty::class;
+    protected static ?string $model = Penalty::class;
 
     protected static ?string $navigationGroup = 'Configuration';
 

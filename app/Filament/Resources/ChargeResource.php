@@ -2,30 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\LoanChargeResource\Pages;
-use App\Filament\Resources\LoanChargeResource\RelationManagers;
+use App\Filament\Resources\ChargeResource\Pages;
 use App\Library\Enums\DeductibleValueType;
 use App\Library\Enums\LoanChargeDestination;
 use App\Library\Enums\LoanChargeSource;
-use App\Models\LoanCharge;
+use App\Models\Charge;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Miguilim\FilamentAutoPanel\AutoResource;
 
-class LoanChargeResource extends Resource
+class ChargeResource extends Resource
 {
-    protected static ?string $model = LoanCharge::class;
+    protected static ?string $model = Charge::class;
 
     protected static ?string $navigationGroup = 'Configuration';
 
@@ -85,10 +80,10 @@ class LoanChargeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLoanCharges::route('/'),
-            'create' => Pages\CreateLoanCharge::route('/create'),
-            'edit' => Pages\EditLoanCharge::route('/{record}/edit'),
-            'view' => Pages\ViewLoanCharge::route('/{record}'),
+            'index' => Pages\ListCharges::route('/'),
+            'create' => Pages\CreateCharge::route('/create'),
+            'edit' => Pages\EditCharge::route('/{record}/edit'),
+            'view' => Pages\ViewCharge::route('/{record}'),
         ];
     }
 }

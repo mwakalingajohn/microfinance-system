@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class LoanChargeLoanProduct extends Pivot
+class ChargeLoanProduct extends Pivot
 {
     //
 }

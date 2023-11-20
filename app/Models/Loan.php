@@ -5,10 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Loan extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "loan_officer_id",
+        "loan_officer_name",
+        "borrower_id",
+        "borrower_name",
+        "loan_product_id",
+        "loan_product_name",
+        "interest_rate",
+        "organisation_id",
+        "organisation_name",
+        "number_of_installments",
+        "principal",
+        "interest",
+        "charges",
+        "total_charges",
+        "total_loan",
+        "status",
+    ];
 
     /**
      * Get the loanApplication that owns the Loan
@@ -18,5 +38,15 @@ class Loan extends Model
     public function loanApplication(): BelongsTo
     {
         return $this->belongsTo(LoanApplication::class);
+    }
+
+    /**
+     * Get all of the installments for the Loan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function installments(): HasMany
+    {
+        return $this->hasMany(LoanInstallment::class);
     }
 }
