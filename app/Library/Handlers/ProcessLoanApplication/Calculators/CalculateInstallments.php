@@ -36,6 +36,10 @@ class CalculateInstallments
         };
         $loanCalculation->loanInstallments = $installments;
         $loanCalculation->installments = $installments;
+        $loanCalculation->installmentBeforeCharges = collect($installments)->last()->installment;
+        $loanCalculation->disbursementAmount = $loanCalculation->loanApplication->amount;
+        $loanCalculation->principal = $loanCalculation->loanApplication->amount;
+        
         return $next($loanCalculation);
     }
 

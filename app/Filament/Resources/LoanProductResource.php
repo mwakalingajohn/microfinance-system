@@ -19,6 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Miguilim\FilamentAutoPanel\AutoResource;
+use Miguilim\FilamentAutoPanel\Mounters\RelationManagerMounter;
 
 class LoanProductResource extends AutoResource
 {

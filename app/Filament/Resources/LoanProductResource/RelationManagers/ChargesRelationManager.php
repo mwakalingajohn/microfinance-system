@@ -21,7 +21,9 @@ class ChargesRelationManager extends AutoRelationManager
         "from" => LoanChargeSource::data
     ];
 
-    protected static array $visibleColumns = [];
+    protected static array $visibleColumns = [
+        "of","type","from","created_at","label","value", "on"
+    ];
 
     protected static array $searchableColumns = [];
 

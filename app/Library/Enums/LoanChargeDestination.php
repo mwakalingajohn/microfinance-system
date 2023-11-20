@@ -13,9 +13,9 @@ enum LoanChargeDestination: string implements ShouldReturnValues
         "DividedInEachInstallment" => "Divided in each installment",
     ];
 
-    case FirstInstallment = "First installment";
-    case LastInstallment = "Last Installment";
-    case DisbursedAmount = "Disbursed Amount";
-    case DividedInEachInstallment = "Divided in each installment";
+    case FirstInstallment = "FirstInstallment";
+    case LastInstallment = "LastInstallment";
+    case DisbursedAmount = "DisbursedAmount";
+    case DividedInEachInstallment = "DividedInEachInstallment";
 
 }

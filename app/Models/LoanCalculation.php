@@ -24,10 +24,9 @@ class LoanCalculation extends Model
 
     public function getRows()
     {
-        info("refreshing", []);
         $loanCalculationData = session(self::LOAN_CALCULATION_DATA_SESSION_KEY, null);
         if ($loanCalculationData) {
-            return collect($loanCalculationData->installments)
+            return collect($loanCalculationData->loanInstallments)
                 ->map(fn (Installment $installment) => $installment->toArray())
                 ->toArray();
         }

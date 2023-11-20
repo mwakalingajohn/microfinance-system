@@ -23,7 +23,9 @@ class LoanCalculation extends Model
         public ?array $loanCharges = [],
         public ?array $installments = [],
         public ?array $data = [],
-        public ?float $disbursementAmount = 0
+        public ?float $disbursementAmount = 0,
+        public ?float $installmentBeforeCharges = 0,
+        public ?float $principal = 0
     ) {
     }
 }

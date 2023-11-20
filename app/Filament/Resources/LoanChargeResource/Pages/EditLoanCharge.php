@@ -16,4 +16,10 @@ class EditLoanCharge extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['value'] = sanitizeMoney($data["value"]);
+        return $data;
+    }
 }

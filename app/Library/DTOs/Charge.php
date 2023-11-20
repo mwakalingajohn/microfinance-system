@@ -13,4 +13,16 @@ class Charge
         public mixed $amount = 0
     ) {
     }
+
+    public function toArray()
+    {
+        return [
+            "label" => $this->label,
+            "on" => $this->on,
+            "type" => $this->type,
+            "of" => $this->of,
+            "value" => $this->value,
+            "amount" => $this->amount
+        ];
+    }
 }

@@ -88,6 +88,7 @@ class LoanChargeResource extends Resource
             'index' => Pages\ListLoanCharges::route('/'),
             'create' => Pages\CreateLoanCharge::route('/create'),
             'edit' => Pages\EditLoanCharge::route('/{record}/edit'),
+            'view' => Pages\ViewLoanCharge::route('/{record}'),
         ];
     }
 }

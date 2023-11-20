@@ -141,7 +141,6 @@ class LoanCalculator extends Page  implements HasForms, HasTable
 
     public function calculate(): void
     {
-        info("calculating");
         $data = $this->form->getState();
         if ($this->validateFormData($data)) {
             $loanApplication = new LoanApplication([
@@ -165,16 +164,23 @@ class LoanCalculator extends Page  implements HasForms, HasTable
             );
 
             $response = $processLoanApplication->handle();
-            $data = new Fluent($response->data['loanCalculation']);
-            session([
-                LoanCalculation::LOAN_CALCULATION_DATA_SESSION_KEY => $data
-            ]);
-
-            Notification::make()
-                ->success()
-                ->title("Calculation succesful")
-                ->body("Calculation successful, updating summary")
-                ->send();
+            if ($response->success) {
+                $data = new Fluent($response->data['loanCalculation']);
+                session([
+                    LoanCalculation::LOAN_CALCULATION_DATA_SESSION_KEY => $data
+                ]);
+                Notification::make()
+                    ->success()
+                    ->title("Calculation succesful")
+                    ->body("Calculation successful, updating summary")
+                    ->send();
+            } else {
+                Notification::make()
+                    ->danger()
+                    ->title("Calculation failed")
+                    ->body($response->message)
+                    ->send();
+            }
         }
     }
 
