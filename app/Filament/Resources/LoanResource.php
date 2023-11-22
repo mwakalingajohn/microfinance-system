@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LoanResource\Pages;
+use App\Infolists\Components\TableEntry;
 use App\Library\Enums\LoanStatus;
 use App\Models\Loan;
 use Filament\Forms\Form;
@@ -10,6 +11,7 @@ use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Tabs;
 use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\TextEntry\TextEntrySize;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -112,14 +114,51 @@ class LoanResource extends Resource
                     ]),
                 Tabs::make("Other details")
                     ->columnSpanFull()
+                    ->persistTabInQueryString()
                     ->tabs([
                         Tab::make("Amortization")
-                            ->schema([]),
-                        Tab::make("Repayments")
-                            ->schema([]),
+                            ->schema([
+                                TableEntry::make("installments")
+                                    ->title("Loan amortization and balances")
+                                    ->columnSpanFull()
+                                    ->schema([
+                                        TextEntry::make("principal")
+                                            ->money("TZS"),
+                                        TextEntry::make("interest")
+                                            ->money("TZS"),
+                                        TextEntry::make("charges")
+                                            ->money("TZS"),
+                                        TextEntry::make("penalty")
+                                            ->money("TZS"),
+                                        TextEntry::make("installment")
+                                            ->money("TZS"),
+                                        TextEntry::make("remaining_principal")
+                                            ->money("TZS"),
+                                        TextEntry::make("remaining_interest")
+                                            ->money("TZS"),
+                                        TextEntry::make("remaining_charges")
+                                            ->money("TZS"),
+                                        TextEntry::make("remaining_penalty")
+                                            ->money("TZS"),
+                                        TextEntry::make("remaining_installment")
+                                            ->money("TZS")
+                                    ])
+                            ]),
                         Tab::make("Associated charges")
-                            ->schema([]),
-                        Tab::make("Summary")
+                            ->schema([
+                                TableEntry::make("loanCharges")
+                                    ->title("Charges applied to loan")
+                                    ->columnSpanFull()
+                                    ->schema([
+                                        TextEntry::make("label"),
+                                        TextEntry::make("on"),
+                                        TextEntry::make("type"),
+                                        TextEntry::make("of"),
+                                        TextEntry::make("amount")
+                                            ->money("TZS"),
+                                    ])
+                            ]),
+                        Tab::make("Repayments")
                             ->schema([])
                     ])
             ]);

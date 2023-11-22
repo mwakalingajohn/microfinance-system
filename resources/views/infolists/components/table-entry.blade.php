@@ -1,5 +1,39 @@
-<x-dynamic-component :component="$getEntryWrapperView()" :entry="$entry">
-    <div>
-        {{ $getState() }}
+{{-- <x-dynamic-component :component="$getEntryWrapperView()" :entry="$entry"> --}}
+<div class="w-full">
+
+    @if ($getTableTitle())
+    <div class="py-3">
+        <p class="text-lg">{{ $getTableTitle() }}</p>
     </div>
-</x-dynamic-component>
+    @endif
+    <table class="w-full">
+
+        <thead>
+            <tr>
+                @foreach ($getChildComponentContainer()->getComponents() as $item)
+                    <th class="text-left p-1 border font-normal text-sm bg-gray-100 dark:bg-gray-700">
+                        {{ $item->getLabel() }}
+                    </th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($getChildComponentContainers() as $item)
+                <tr>
+                    @foreach ($item->getComponents() as $component)
+                        <td class="p-2 text-xs border">
+                            @php
+                                $component->label('')->size(Filament\Infolists\Components\TextEntry\TextEntrySize::ExtraSmall);
+                            @endphp
+                            {{ $component }}
+                        </td>
+                    @endforeach
+                </tr>
+            @endforeach
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+</div>
+{{-- </x-dynamic-component> --}}

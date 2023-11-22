@@ -66,7 +66,7 @@ class Loan extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function charges(): HasMany
+    public function loanCharges(): HasMany
     {
         return $this->hasMany(LoanCharge::class);
     }

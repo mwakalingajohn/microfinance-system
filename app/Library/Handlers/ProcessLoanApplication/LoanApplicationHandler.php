@@ -177,7 +177,7 @@ class LoanApplicationHandler
 
         // save the loan charges for each loan and loan installment to the DB
         foreach ($loanCalculation->loanCharges as $charge) {
-            $loan->charges()->create([
+            $loan->loanCharges()->create([
                 "label" => $charge->label,
                 "on" => $charge->on,
                 "type" => $charge->type,
