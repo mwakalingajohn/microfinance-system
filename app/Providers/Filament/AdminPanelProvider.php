@@ -95,7 +95,8 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => '#1f76bb',
             ])
-            ->brandLogo(asset('img/logo.png'))
+            ->brandLogo(asset('img/light_logo.jpg'))
+            ->darkModeBrandLogo(asset('img/dark_logo.PNG'))
             ->brandLogoHeight("56px")
             ->databaseNotifications();
     }
