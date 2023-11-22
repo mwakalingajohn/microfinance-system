@@ -23,7 +23,9 @@ class LoanApplication extends ApprovableModel
         "interest",
         "branch_id",
         "loan_officer_id",
-        "loan_id"
+        "loan_id",
+        "status",
+        "comment"
     ];
 
     protected $casts = [
@@ -67,7 +69,7 @@ class LoanApplication extends ApprovableModel
      */
     public function loanOfficer(): BelongsTo
     {
-        return $this->belongsTo(loanOfficer::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Library\Traits\CanCalculateEMI;
 use App\Library\Traits\CanConvertTimePeriod;
 use App\Library\Traits\CanCorrectInstallments;
 use App\Models\LoanApplication;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Support\Fluent;
 
@@ -106,7 +107,7 @@ class CalculateInstallments
         $loanProductDetails = $this->loanApplication->loan_product_details;
 
         $numberOfInstallments = $this->loanApplication->number_of_installments;
-        $startDate = $this->data->disbursed_on;
+        $startDate = Carbon::parse($this->data->disbursed_on);
 
         $loan_balance = $amount;
         $interest /= 100;

@@ -25,8 +25,6 @@ use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LoanApplicationResource extends Resource implements HasShieldPermissions
 {
@@ -111,7 +109,8 @@ class LoanApplicationResource extends Resource implements HasShieldPermissions
                 TextColumn::make("borrower.first_name")->label("Borrower"),
                 TextColumn::make("loanProduct.label"),
                 TextColumn::make("amount")->money("Tsh"),
-                ApprovalStatusColumn::make("approvalStatus.status")
+                ApprovalStatusColumn::make("approvalStatus.status"),
+                TextColumn::make("status")
             ])
             ->filters([
                 //
@@ -143,15 +142,17 @@ class LoanApplicationResource extends Resource implements HasShieldPermissions
                                 ->label("Disbursement Date")
                         ])
                         ->action(function (LoanApplication $record, array $data): void {
-                            $response = (new LoanService)->disburse($record, $data["method"]);
+                            $response = (new LoanService)->disburse($record, $data);
                             if ($response->success) {
                                 Notification::make()
                                     ->title('Disbursement successful')
+                                    ->body("The loan was successfully disbursed")
                                     ->success()
                                     ->send();
                             } else {
                                 Notification::make()
                                     ->title('Disbursement failed')
+                                    ->body($response->message)
                                     ->danger()
                                     ->send();
                             }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger("loan_id");
             $table->unsignedBigInteger("disbursed_by");
             $table->string('method', 100)->default(LoanDisbursementMethod::Cash->value);
-            $table->decimal('amount', 5, 2)->nullable();
+            $table->decimal('amount', 15, 2)->nullable();
             $table->dateTime('disbursed_on')->nullable()->useCurrent();
             $table->text('comment')->nullable();
             $table->string('status', 100)->default(LoanDisbursementStatus::Pending->value);

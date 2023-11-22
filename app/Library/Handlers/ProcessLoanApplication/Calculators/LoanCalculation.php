@@ -27,7 +27,7 @@ class LoanCalculation extends Model
         public ?float $disbursementAmount = 0,
         public ?float $installmentBeforeCharges = 0,
         public ?float $principal = 0,
-        public ?Loan $loan = null
+        public ?Loan $loan = null        
     ) {
     }
 }

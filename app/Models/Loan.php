@@ -12,6 +12,7 @@ class Loan extends Model
     use HasFactory;
 
     protected $fillable = [
+        "loan_application_id",
         "loan_officer_id",
         "loan_officer_name",
         "borrower_id",
@@ -68,5 +69,26 @@ class Loan extends Model
     public function charges(): HasMany
     {
         return $this->hasMany(LoanCharge::class);
+    }
+
+
+    /**
+     * Get the borrower that owns the Loan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function borrower(): BelongsTo
+    {
+        return $this->belongsTo(Borrower::class);
+    }
+
+    /**
+     * Get the product that owns the Loan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function loanProduct(): BelongsTo
+    {
+        return $this->belongsTo(LoanProduct::class);
     }
 }

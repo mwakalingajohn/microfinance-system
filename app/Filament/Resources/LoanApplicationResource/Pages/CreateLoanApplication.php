@@ -16,7 +16,7 @@ class CreateLoanApplication extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['loan_officer_id'] = auth()->id();
-        $data['loan_product_details'] = LoanProduct::with("loanCharges")->find($data["loan_product_id"])?->toArray();
+        $data['loan_product_details'] = LoanProduct::with("charges")->find($data["loan_product_id"])?->toArray();
         $data['borrower_name'] = Borrower::find($data["borrower_id"])?->first_name;
         $data['loan_product_name'] = LoanProduct::find($data["loan_product_id"])?->label;
         $data['amount'] = sanitizeMoney($data["amount"]);

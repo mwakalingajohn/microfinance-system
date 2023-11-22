@@ -92,7 +92,7 @@ class CalculateCharges
      */
     public function calculate(LoanCalculation $loanCalculation): array
     {
-        $charges = $loanCalculation->loanApplication->loan_product_details->loanCharges;
+        $charges = $loanCalculation->loanApplication->loan_product_details->charges;
         $_charges = [];
 
         foreach ($charges as $charge) {

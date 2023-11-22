@@ -147,7 +147,7 @@ class LoanCalculator extends Page  implements HasForms, HasTable
                 "borrower_name" => null,
                 "loan_product_id" => $data["loan_product_id"],
                 "loan_product_name" => LoanProduct::find($data["loan_product_id"])?->label,
-                "loan_product_details" => LoanProduct::with("loanCharges")->find($data["loan_product_id"]),
+                "loan_product_details" => LoanProduct::with("charges")->find($data["loan_product_id"]),
                 "amount" => sanitizeMoney($data["amount"]),
                 "number_of_installments" => $data["number_of_installments"],
                 "interest" => $data["interest"],

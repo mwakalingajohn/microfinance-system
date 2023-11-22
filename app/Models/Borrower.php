@@ -29,4 +29,9 @@ class Borrower extends Model
     {
         return $this->belongsTo(Organisation::class);
     }
+
+    public function getNameAttribute()
+    {
+        return "{$this->first_name} {$this->middle_name[0]}. {$this->last_name}";
+    }
 }
