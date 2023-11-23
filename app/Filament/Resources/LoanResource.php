@@ -6,6 +6,9 @@ use App\Filament\Resources\LoanResource\Pages;
 use App\Infolists\Components\TableEntry;
 use App\Library\Enums\LoanStatus;
 use App\Models\Loan;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Tabs;
@@ -15,15 +18,34 @@ use Filament\Infolists\Components\TextEntry\TextEntrySize;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class LoanResource extends Resource
+class LoanResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Loan::class;
 
-
     protected static ?string $navigationGroup = "Loans";
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'restore',
+            'restore_any',
+            'replicate',
+            'reorder',
+            'delete',
+            'delete_any',
+            'force_delete',
+            'force_delete_any',
+            'repay'
+        ];
+    }
 
     // protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -58,6 +80,22 @@ class LoanResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
+                Action::make("repay")
+                    ->slideOver()
+                    ->modalWidth("md")
+                    ->form([
+                        TextInput::make("amount")
+                            ->mask(moneyMask())
+                            ->prefix("TZS")
+                            ->required(),
+                        FileUpload::make("attachment")
+                            ->label("Proof of payment")
+
+
+                    ])
+                    ->action(function (array $data) {
+                        dd($data);
+                    })
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
@@ -89,7 +127,6 @@ class LoanResource extends Resource
         return $infolist
             ->schema([
                 Section::make('Loan Details')
-                    // ->description('LIn depth loan details')
                     ->columns(4)
                     ->schema([
                         TextEntry::make('borrower.name'),

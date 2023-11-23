@@ -12,7 +12,6 @@ use App\Library\Handlers\ProcessLoanApplication\Calculators\LoanCalculation;
 use App\Library\Handlers\ProcessLoanApplication\Validators\ItHasNotBeenProcessed;
 use App\Library\Handlers\ProcessLoanApplication\Validators\ItIsFullyApproved;
 use App\Library\Traits\HasInternalResponse;
-use App\Models\Borrower;
 use App\Models\Loan;
 use App\Models\LoanApplication;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +22,6 @@ use Throwable;
 class LoanApplicationHandler
 {
     use HasInternalResponse;
-
 
     public function __construct(
         public LoanApplication $loanApplication,
