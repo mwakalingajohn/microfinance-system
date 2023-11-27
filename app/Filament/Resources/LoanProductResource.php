@@ -2,79 +2,107 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\LoanProductResource\Pages;
-use App\Filament\Resources\LoanProductResource\RelationManagers;
+use App\Filament\Resources\LoanProductResource\Pages\EditLoanProduct;
+use App\Filament\Resources\LoanProductResource\RelationManagers\ChargesRelationManager;
+use App\Filament\Resources\LoanProductResource\RelationManagers\PenaltiesRelationManager;
+use App\Infolists\Components\JsonEntry;
+use App\Library\Enums\DueDateMethod;
 use App\Library\Enums\InterestPeriod;
+use App\Library\Enums\LoanCalculationMethod;
+use App\Library\Enums\RepaymentOrderItem;
 use App\Models\LoanProduct;
-use Filament\Forms;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Miguilim\FilamentAutoPanel\AutoResource;
+use Miguilim\FilamentAutoPanel\Mounters\PageMounter;
 
-class LoanProductResource extends Resource
+class LoanProductResource extends AutoResource
 {
     protected static ?string $model = LoanProduct::class;
 
     protected static ?string $navigationGroup = 'Configuration';
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                \EightyNine\SortableField\Forms\Components\SortableField::make("repayment_order")
-                    ->items([
-                        "moja" => "One",
-                        "mbili" => "Two",
-                        "tatu" => "Three"
-                    ]),
-                Select::make("interest_period")
-                    ->options(InterestPeriod::associativeValues()),
-                Repeater::make('charges')
-                    ->schema([
-                        TextInput::make('label')->required(),
+    protected static array $enumDictionary = [
+        "interest_period" => InterestPeriod::data,
+        "repayment_period" => InterestPeriod::data,
+        "calculation_method" => LoanCalculationMethod::data,
+        "due_date_method" => DueDateMethod::data
+    ];
 
-                    ])
-                    ->columns(2)
+    protected static array $visibleColumns = [
+        "label",
+        "minimum_principal",
+        "maximum_principal",
+        "default_interest_rate",
+        "interest_period",
+        "due_date_method",
+        "grace_on_interest"
+    ];
 
-            ]);
-    }
+    protected static array $searchableColumns = [];
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
-
-    public static function getRelations(): array
+    public static function getFilters(): array
     {
         return [
             //
         ];
     }
 
-    public static function getPages(): array
+    public static function getActions(): array
     {
         return [
-            'index' => Pages\ListLoanProducts::route('/'),
-            'create' => Pages\CreateLoanProduct::route('/create'),
-            'edit' => Pages\EditLoanProduct::route('/{record}/edit'),
+            //
+        ];
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            ChargesRelationManager::class,
+            PenaltiesRelationManager::class
+        ];
+    }
+
+    public static function getHeaderWidgets(): array
+    {
+        return [
+            'list' => [
+                //
+            ],
+            'view' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getFooterWidgets(): array
+    {
+        return [
+            'list' => [
+                //
+            ],
+            'view' => [
+                //
+            ],
+        ];
+    }
+
+    public static function getColumnsOverwrite(): array
+    {
+        return [
+            'table' => [],
+            'form' => [
+                \EightyNine\SortableField\Forms\Components\SortableField::make("repayment_order")
+                    ->items(RepaymentOrderItem::associativeValues())
+            ],
+            'infolist' => [
+                \EightyNine\SortableField\Infolists\Components\SortableEntry::make("repayment_order")
+            ],
+        ];
+    }
+
+    public static function getExtraPages(): array
+    {
+        return [
+            
         ];
     }
 }

@@ -13,6 +13,7 @@ class LoanProduct extends Model
     protected $guarded = [];
 
     protected $casts = [
+        "repayment_order" => "array"
     ];
 
     /**

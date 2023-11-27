@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 @foreach ($getChildComponentContainer()->getComponents() as $item)
-                    <th class="text-left p-1 border font-normal text-sm bg-gray-100 dark:bg-gray-700">
+                    <th class="text-left p-1 border font-normal text-sm bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
                         {{ $item->getLabel() }}
                     </th>
                 @endforeach
@@ -21,7 +21,7 @@
             @foreach ($getChildComponentContainers() as $item)
                 <tr>
                     @foreach ($item->getComponents() as $component)
-                        <td class="p-2 text-xs border">
+                        <td class="p-2 text-xs border dark:border-gray-700">
                             @php
                                 $component->label('')->size(Filament\Infolists\Components\TextEntry\TextEntrySize::ExtraSmall);
                             @endphp

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "210961bdce5680eb1ba177f6ea2dec91",
+    "content-hash": "4b2ec6b2285a46fc24fdd248b6a34868",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -1568,14 +1568,21 @@
         },
         {
             "name": "eightynine/filament-sortable-field",
-            "version": "dev-main",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eighty9nine/filament-sortable-field.git",
+                "reference": "fc56783a71e20d3423dbff1f622a7679cc86c16a"
+            },
             "dist": {
-                "type": "path",
-                "url": "/var/www/plugins/filament-sortable-field",
-                "reference": "f3c065a48004511611e20405cfd3b84b21b1b114"
+                "type": "zip",
+                "url": "https://api.github.com/repos/eighty9nine/filament-sortable-field/zipball/fc56783a71e20d3423dbff1f622a7679cc86c16a",
+                "reference": "fc56783a71e20d3423dbff1f622a7679cc86c16a",
+                "shasum": ""
             },
             "require": {
                 "filament/filament": "^3.0",
+                "filament/infolists": "^3.0",
                 "illuminate/contracts": "^10.0",
                 "php": "^8.1",
                 "spatie/laravel-package-tools": "^1.9.2"
@@ -1584,10 +1591,8 @@
                 "nunomaduro/collision": "^7.9",
                 "orchestra/testbench": "^8.0",
                 "pestphp/pest": "^2.0",
-                "pestphp/pest-plugin-laravel": "^2.1",
-                "pestphp/pest-plugin-livewire": "^2.0",
-                "pestphp/pest-plugin-parallel": "^0.3",
-                "phpunit/phpunit": "^9.5"
+                "pestphp/pest-plugin-arch": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0"
             },
             "type": "library",
             "extra": {
@@ -1606,20 +1611,7 @@
                     "EightyNine\\SortableField\\Database\\Factories\\": "database/factories"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "EightyNine\\SortableField\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test:pest": [
-                    "vendor/bin/pest --parallel"
-                ],
-                "test": [
-                    "@test:pest",
-                    "@test:phpstan"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1637,10 +1629,11 @@
                 "filament-sortable-field",
                 "laravel"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": false
-            }
+            "support": {
+                "issues": "https://github.com/eighty9nine/filament-sortable-field/issues",
+                "source": "https://github.com/eighty9nine/filament-sortable-field/tree/3.0.1"
+            },
+            "time": "2023-11-27T08:31:22+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -11633,7 +11626,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": [],
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
