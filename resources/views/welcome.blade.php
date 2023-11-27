@@ -9,7 +9,7 @@
 </head>
 <body class="w-full h-full flex items-center justify-center bg-gray-100">
     <div class="w-96 h-48 shadow-lg bg-white flex items-center justify-center">
-        <a href="/dashboard" class="underline decoration-dotted">Go to Dashboard</a>
+        <a href="/dashboard" class="underline decoration-dotted">Go to Dashboard</a><br>
     </div>
 </body>
 </html>

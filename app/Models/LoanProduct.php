@@ -10,6 +10,11 @@ class LoanProduct extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+    protected $casts = [
+    ];
+
     /**
      * The charges that belong to the LoanProduct
      *

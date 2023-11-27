@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('loan_penalties', function (Blueprint $table) {
-            $table->unsignedBigInteger('loan_id')->nullable()->after("id");
-            $table->decimal("amount", 15, 2)->nullable()->after("value");
+        Schema::table('loan_products', function (Blueprint $table) {
+            $table->text('repayment_order')->nullable()->after("grace_on_interest");
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('loan_penalties', function (Blueprint $table) {
-            $table->dropColumn("loan_id");
-            $table->dropColumn("amount");
+        Schema::table('loan_products', function (Blueprint $table) {
+            $table->dropColumn('repayment_order');
         });
     }
 };
