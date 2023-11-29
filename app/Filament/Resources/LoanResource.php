@@ -7,6 +7,7 @@ use App\Infolists\Components\TableEntry;
 use App\Library\Enums\LoanStatus;
 use App\Models\Loan;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -89,9 +90,11 @@ class LoanResource extends Resource implements HasShieldPermissions
                             ->prefix("TZS")
                             ->required(),
                         FileUpload::make("attachment")
-                            ->label("Proof of payment")
-
-
+                            ->label("Proof of payment"),
+                        DateTimePicker::make("repayment_date")
+                            ->required()
+                            ->default(now())
+                            ->label("Repaid On")
                     ])
                     ->action(function (array $data) {
                         dd($data);

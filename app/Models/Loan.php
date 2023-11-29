@@ -32,6 +32,16 @@ class Loan extends Model
     ];
 
     /**
+     * Get the loanOfficer that owns the Loan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function loanOfficer(): BelongsTo
+    {
+        return $this->belongsTo(loanOfficer::class);
+    }
+
+    /**
      * Get all of the disbursements for the Loan
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -90,5 +100,15 @@ class Loan extends Model
     public function loanProduct(): BelongsTo
     {
         return $this->belongsTo(LoanProduct::class);
+    }
+
+    /**
+     * Get the organisation that owns the Loan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organisation(): BelongsTo
+    {
+        return $this->belongsTo(Organisation::class);
     }
 }

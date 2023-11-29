@@ -17,6 +17,7 @@ enum InterestPeriod: string implements ShouldReturnValues
     case Weekly = 'Weekly';
     case Monthly = 'Monthly';
     case Yearly = 'Yearly';
+    case Null = "0";
 
     public function inPlural()
     {

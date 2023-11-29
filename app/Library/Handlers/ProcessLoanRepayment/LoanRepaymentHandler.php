@@ -3,45 +3,84 @@
 namespace App\Library\Handlers\ProcessLoanRepayment;
 
 use App\Library\DTOs\InternalResponse;
-use App\Library\Enums\RepaymentOrderItem;
+use App\Library\DTOs\Repayment;
+use App\Library\Enums\LoanRepaymentStatus;
 use App\Library\Traits\HasInternalResponse;
+use App\Library\Traits\HasRepaymentOrder;
 use App\Models\Loan;
+use App\Models\LoanProduct;
+use App\Models\LoanRepayment;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Pipeline;
+use Throwable;
 
 class LoanRepaymentHandler
 {
     use HasInternalResponse;
+    use HasRepaymentOrder;
 
     public function __construct(
         public Loan $loan,
-        public array $loanRepaymentData
+        public array $loanRepaymentData,
+        public LoanRepayment $loanRepayment
     ) {
     }
 
     public function handle(): InternalResponse
     {
+        return rescue(function () {
 
-        // get the repayment order
-        $this->getRepaymentOrder();
+            DB::transaction(function () {
 
-        // deduct the balances according to the order
+                $loanRepaymentData = $this->loanRepaymentData;
+                $loanProduct = $this->loan->loanProduct;
+                $amount = $loanRepaymentData["amount"];
 
-            // after each deduction update the repayment table
+                foreach ($this->loan->installments as  $installment) {
+                    if ($amount <= 0) break;
+                    $repayment = Pipeline::send(new Repayment(
+                        loanRepaymentData: $loanRepaymentData,
+                        loanProduct: $loanProduct,
+                        deductionBalance: $amount,
+                        installment: $installment,
+                        loanRepayment: $this->loanRepayment
+                    ))
+                        ->through(
+                            $this->mapDeductorsToRepaymentOrder()
+                        )
+                        ->then(fn (Repayment $repayment) => $repayment);
+                    $amount = $repayment->deductionBalance;
+                }
 
-            // if it is charges/penalties deducting then update with respect to the individual charges
-            // store the charge details
-            // store the penalty details
+                $this->loanRepayment->update([
+                    "status" => LoanRepaymentStatus::Successful->value
+                ]);
+            });
 
-        // update the loan status and installment status
-
-        return $this->setResponse(false);
+            return $this->setResponse(
+                success: true,
+                message: "Loan repayment successful",
+                data: [
+                    "loanRepayment" => $this->loanRepayment,
+                    "loan" => $this->loan
+                ]
+            );
+        }, function (Throwable $th) {
+            return $this->setResponse(
+                success: false,
+                message: "Loan repayment failed! Error: " . $th->getMessage()
+            );
+        });
     }
 
-    private function getRepaymentOrder(){
-        return [
-            RepaymentOrderItem::Penalties,
-            RepaymentOrderItem::Interest,
-            RepaymentOrderItem::Charges,
-            RepaymentOrderItem::Principal
-        ];
+
+    /**
+     * Get loan product
+     *
+     * @return LoanProduct|null
+     */
+    protected function getLoanProduct(): ?LoanProduct
+    {
+        return $this->loan->loanProduct;
     }
 }

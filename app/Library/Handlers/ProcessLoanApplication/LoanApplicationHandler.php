@@ -2,6 +2,12 @@
 
 namespace App\Library\Handlers\ProcessLoanApplication;
 
+use App\Events\LoanDisbursed;
+use App\Events\Loans\LoanDisbursing;
+use App\Events\Loans\LoanStored;
+use App\Events\Loans\LoanStoring;
+use App\Events\Loans\LoanValidated;
+use App\Events\Loans\LoanValidating;
 use App\Library\DTOs\InternalResponse;
 use App\Library\Enums\LoanApplicationStatus;
 use App\Library\Enums\LoanDisbursementStatus;
@@ -40,17 +46,36 @@ class LoanApplicationHandler
     {
         return rescue(function () {
 
+            LoanValidating::dispatch(
+                $this->loanApplication,
+                $this->loanDisbursementData
+            );
+
             $this->validate();
+
+            LoanValidated::dispatch(
+                $this->loanApplication,
+                $this->loanDisbursementData
+            );
 
             $loanCalculation = $this->calculate();
 
             DB::transaction(function () use (&$loanCalculation) {
                 if ($this->shouldStore) {
+                    LoanStoring::dispatch($loanCalculation);
+
                     $loan = $this->store($loanCalculation);
+
+                    LoanStored::dispatch($loanCalculation);
                 }
 
                 if ($this->shouldDisburse) {
+
+                    LoanDisbursing::dispatch($loanCalculation);
+
                     $this->disburse($loan, $loanCalculation);
+
+                    LoanDisbursed::dispatch($loanCalculation);
                 }
             });
 
@@ -176,6 +201,7 @@ class LoanApplicationHandler
         // save the loan charges for each loan and loan installment to the DB
         foreach ($loanCalculation->loanCharges as $charge) {
             $loan->loanCharges()->create([
+                "charge_id" => $charge->id,
                 "label" => $charge->label,
                 "on" => $charge->on,
                 "type" => $charge->type,
