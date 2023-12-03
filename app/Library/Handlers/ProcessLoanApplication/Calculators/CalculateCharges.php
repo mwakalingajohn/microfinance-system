@@ -3,14 +3,11 @@
 namespace App\Library\Handlers\ProcessLoanApplication\Calculators;
 
 use App\Library\DTOs\Charge;
-use App\Library\Enums\CanConvertTimePeriod;
+use App\Library\DTOs\Installment;
 use App\Library\Enums\DeductibleValueType;
 use App\Library\Enums\LoanChargeDestination;
 use App\Library\Enums\LoanChargeSource;
-use App\Library\Traits\CanCalculateDueDates;
-use App\Library\Traits\CanCalculateEMI;
 use App\Models\LoanApplication;
-use App\Models\LoanCharge;
 use Closure;
 use Illuminate\Support\Fluent;
 
@@ -27,7 +24,7 @@ class CalculateCharges
         $loanCalculation->loanCharges = $this->calculate($loanCalculation);
 
         $loanCalculation = $this->applyCharges($loanCalculation);
-        
+
         return $next($loanCalculation);
     }
 
@@ -37,14 +34,14 @@ class CalculateCharges
         $installmentCount = count($loanCalculation->installments);
 
         foreach ($loanCharges as $charge) {
-            $charge = new Fluent($charge);
 
-            info("Charge on:" . $charge->on);
             switch ($charge->on) {
                 case LoanChargeDestination::FirstInstallment->value:
                     $loanCalculation->loanInstallments = collect($loanCalculation->loanInstallments)
-                        ->map(function ($installment, $index) use ($charge) {
+                        ->map(function (Installment $installment, $index) use ($charge) {
                             if ($index == 0) {
+                                $charge->chargedAmount = $charge->amount;
+                                $installment->installmentCharges[] = $charge;
                                 $installment->charges += $charge->amount;
                                 $installment->installment += $charge->amount;
                             }
@@ -55,6 +52,8 @@ class CalculateCharges
                     $loanCalculation->loanInstallments = collect($loanCalculation->loanInstallments)
                         ->map(function ($installment, $index) use ($charge, $installmentCount) {
                             if ($index == ($installmentCount - 1)) {
+                                $charge->chargedAmount = $charge->amount;
+                                $installment->installmentCharges[] = $charge;
                                 $installment->charges += $charge->amount;
                                 $installment->installment += $charge->amount;
                             }
@@ -67,7 +66,9 @@ class CalculateCharges
                 case LoanChargeDestination::DividedInEachInstallment->value:
                     $chargeAmount = $charge->amount / count($loanCalculation->installments);
                     $loanCalculation->loanInstallments = collect($loanCalculation->loanInstallments)
-                        ->map(function ($installment) use ($chargeAmount) {
+                        ->map(function ($installment) use ($chargeAmount, $charge) {
+                            $charge->chargedAmount = $chargeAmount;
+                            $installment->installmentCharges[] = $charge;
                             $installment->charges += $chargeAmount;
                             $installment->installment += $chargeAmount;
                             return $installment;
@@ -107,6 +108,7 @@ class CalculateCharges
             };
 
             $_charges[] = new Charge(
+                id: $charge->id,
                 label: $charge->label,
                 on: $charge->on,
                 type: $charge->type,

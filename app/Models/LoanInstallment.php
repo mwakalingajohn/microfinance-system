@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LoanInstallment extends Model
 {
@@ -33,6 +34,7 @@ class LoanInstallment extends Model
         "remaining_penalty",
         "remaining_installment",
         "due_date",
+        "status",
     ];
 
     protected $casts = [
@@ -47,5 +49,15 @@ class LoanInstallment extends Model
     public function loan(): BelongsTo
     {
         return $this->belongsTo(Loan::class);
+    }
+
+    /**
+     * Get all of the charges for the LoanInstallment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function addedCharges(): HasMany
+    {
+        return $this->hasMany(LoanInstallmentCharge::class);
     }
 }

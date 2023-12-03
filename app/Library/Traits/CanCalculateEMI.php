@@ -27,7 +27,6 @@ trait CanCalculateEMI
         $v2 = $interest * $v1;
         $v3 = $v1 - 1;
         $emi = $amount * $v2 / $v3;
-        // dd($emi);
         return $emi;
     }
 }

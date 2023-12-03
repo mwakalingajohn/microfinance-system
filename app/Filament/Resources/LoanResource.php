@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LoanResource\Pages;
 use App\Infolists\Components\TableEntry;
 use App\Library\Enums\LoanStatus;
+use App\Library\Services\LoanService;
 use App\Models\Loan;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\DateTimePicker;
@@ -17,6 +18,7 @@ use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\TextEntry\TextEntrySize;
 use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
@@ -74,7 +76,10 @@ class LoanResource extends Resource implements HasShieldPermissions
                         LoanStatus::Overdue->value => 'warning',
                         LoanStatus::Paid->value => 'success',
                         LoanStatus::Defaulted->value => 'danger',
-                    })
+                    }),
+                TextColumn::make("created_at")
+                ->dateTime()
+                ->label("Date")
             ])
             ->filters([
                 //
@@ -89,15 +94,28 @@ class LoanResource extends Resource implements HasShieldPermissions
                             ->mask(moneyMask())
                             ->prefix("TZS")
                             ->required(),
-                        FileUpload::make("attachment")
+                        FileUpload::make("proof_of_payment")
                             ->label("Proof of payment"),
                         DateTimePicker::make("repayment_date")
                             ->required()
                             ->default(now())
                             ->label("Repaid On")
                     ])
-                    ->action(function (array $data) {
-                        dd($data);
+                    ->action(function (Loan $record, array $data) {
+                        $response = (new LoanService)->repay($record, $data);
+                        if ($response->success) {
+                            Notification::make()
+                                ->title('Repayment successful')
+                                ->body("The loan was successfully repaid")
+                                ->success()
+                                ->send();
+                        } else {
+                            Notification::make()
+                                ->title('Repayment failed')
+                                ->body($response->message)
+                                ->danger()
+                                ->send();
+                        }
                     })
             ])
             ->bulkActions([

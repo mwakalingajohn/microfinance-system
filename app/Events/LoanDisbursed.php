@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Library\Handlers\ProcessLoanApplication\Calculators\LoanCalculation;
 use App\Models\Loan;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -19,7 +20,7 @@ class LoanDisbursed
      * Create a new event instance.
      */
     public function __construct(
-        public Loan $loan
+        public LoanCalculation $loanCalculation
     )
     {
         //

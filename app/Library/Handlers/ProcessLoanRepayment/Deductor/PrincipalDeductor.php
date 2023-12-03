@@ -23,22 +23,26 @@ class PrincipalDeductor implements Deductor
      * @param Closure $next
      * @return Closure
      */
-    public function __invoke(Repayment $repayment, Closure $next): Closure
+    public function __invoke(Repayment $repayment, Closure $next):  mixed
     {
-
-        $installment = $repayment->getInstallment();
-        $repaymentDetail = $this->createLoanRepaymentDetail($repayment);
-
-        $repaidAmount = $this->updateInstallmentDeduction(
-            $installment,
-            $repayment,
-            "remaining_principal"
-        );
         
-        $repaymentDetail->update([
-            "amount" => $repaidAmount,
-            "type" => $this->type
-        ]);
+        if($repayment->deductionBalance >  0) {
+            
+            $installment = $repayment->getInstallment();
+            $repaymentDetail = $this->createLoanRepaymentDetail($repayment);
+    
+            $repaidAmount = $this->updateInstallmentDeduction(
+                $installment,
+                $repayment,
+                "remaining_principal"
+            );
+            
+            $repaymentDetail->update([
+                "amount" => $repaidAmount,
+                "type" => $this->type
+            ]);
+        };
+
 
         return $next($repayment);
     }

@@ -11,6 +11,7 @@ use App\Events\Loans\LoanValidating;
 use App\Library\DTOs\InternalResponse;
 use App\Library\Enums\LoanApplicationStatus;
 use App\Library\Enums\LoanDisbursementStatus;
+use App\Library\Enums\LoanInstallmentStatus;
 use App\Library\Enums\LoanStatus;
 use App\Library\Handlers\ProcessLoanApplication\Calculators\CalculateCharges;
 use App\Library\Handlers\ProcessLoanApplication\Calculators\CalculateInstallments;
@@ -20,6 +21,7 @@ use App\Library\Handlers\ProcessLoanApplication\Validators\ItIsFullyApproved;
 use App\Library\Traits\HasInternalResponse;
 use App\Models\Loan;
 use App\Models\LoanApplication;
+use App\Models\LoanProduct;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Pipeline;
@@ -173,7 +175,7 @@ class LoanApplicationHandler
 
         // save the installments
         foreach ($loanCalculation->loanInstallments as $installment) {
-            $loan->installments()->create([
+            $_installment = $loan->installments()->create([
                 "loan_officer_id" => $loanOfficer->id,
                 "loan_officer_name" => $loanOfficer->name,
                 "borrower_id" => $borrower->id,
@@ -195,7 +197,26 @@ class LoanApplicationHandler
                 "remaining_penalty" => 0,
                 "remaining_installment" => $installment->installment,
                 "due_date" => $installment->dueDate,
+                "status" => LoanInstallmentStatus::Unpaid->value
             ]);
+
+            foreach ($installment->installmentCharges as $charge) {
+                $_installment->addedCharges()->create([
+                    "charge_id" => $charge?->id,
+                    "loan_officer_id" => $loanOfficer?->id,
+                    "organisation_id" => $organisation?->id,
+                    "borrower_id" => $borrower->id,
+                    "loan_product_id" => $loanProduct->id,
+                    "loan_id" => $loan->id,
+                    "label" => $charge->label,
+                    "on" => $charge->on,
+                    "type" => $charge->type,
+                    "of" => $charge->of,
+                    "value" => $charge->value,
+                    "amount" => $charge->chargedAmount,
+                    "remaining_amount" => $charge->chargedAmount
+                ]);
+            }
         }
 
         // save the loan charges for each loan and loan installment to the DB

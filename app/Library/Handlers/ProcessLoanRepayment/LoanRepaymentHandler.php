@@ -4,10 +4,13 @@ namespace App\Library\Handlers\ProcessLoanRepayment;
 
 use App\Library\DTOs\InternalResponse;
 use App\Library\DTOs\Repayment;
+use App\Library\Enums\LoanInstallmentStatus;
 use App\Library\Enums\LoanRepaymentStatus;
+use App\Library\Enums\LoanStatus;
 use App\Library\Traits\HasInternalResponse;
 use App\Library\Traits\HasRepaymentOrder;
 use App\Models\Loan;
+use App\Models\LoanInstallment;
 use App\Models\LoanProduct;
 use App\Models\LoanRepayment;
 use Illuminate\Support\Facades\DB;
@@ -36,6 +39,10 @@ class LoanRepaymentHandler
                 $loanProduct = $this->loan->loanProduct;
                 $amount = $loanRepaymentData["amount"];
 
+                $installments = $this->loan->installments()
+                    ->where("status", "!=", LoanInstallmentStatus::Paid->value)
+                    ->get();
+
                 foreach ($this->loan->installments as  $installment) {
                     if ($amount <= 0) break;
                     $repayment = Pipeline::send(new Repayment(
@@ -50,11 +57,14 @@ class LoanRepaymentHandler
                         )
                         ->then(fn (Repayment $repayment) => $repayment);
                     $amount = $repayment->deductionBalance;
+                    $this->updateInstallmentStatus($installment);
                 }
 
                 $this->loanRepayment->update([
                     "status" => LoanRepaymentStatus::Successful->value
                 ]);
+
+                $this->updateLoanStatus($this->loan);
             });
 
             return $this->setResponse(
@@ -82,5 +92,37 @@ class LoanRepaymentHandler
     protected function getLoanProduct(): ?LoanProduct
     {
         return $this->loan->loanProduct;
+    }
+
+    /**
+     * Update installment status
+     *
+     * @param LoanInstallment $installment
+     * @return void
+     */
+    private function updateInstallmentStatus(LoanInstallment $installment)
+    {
+        if ($installment->installment == $installment->remaining_installment) {
+            $installment->update([
+                "status" => LoanInstallmentStatus::Unpaid->value
+            ]);
+        } else if ($installment->remaining_installment > 0) {
+            $installment->update([
+                "status" => LoanInstallmentStatus::Partial->value
+            ]);
+        } else {
+            $installment->update([
+                "status" => LoanInstallmentStatus::Paid->value
+            ]);
+        }
+    }
+
+    private function updateLoanStatus(Loan $loan)
+    {
+        if ($loan->installments()->sum("remaining_installment") <= 0) {
+            $loan->update([
+                "status" => LoanStatus::Paid->value
+            ]);
+        }
     }
 }

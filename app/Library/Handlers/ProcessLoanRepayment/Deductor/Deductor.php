@@ -7,5 +7,5 @@ use Closure;
 
 interface Deductor
 {
-    public function __invoke(Repayment $repayment, Closure $next): Closure;
+    public function __invoke(Repayment $repayment, Closure $next): mixed;
 }

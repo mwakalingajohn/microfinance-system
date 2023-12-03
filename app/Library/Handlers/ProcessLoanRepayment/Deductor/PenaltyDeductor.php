@@ -8,10 +8,15 @@ use Closure;
 class PenaltyDeductor implements Deductor
 {
 
-    public function __invoke(Repayment $repayment, Closure $next): Closure
+    public function __invoke(Repayment $repayment, Closure $next):  mixed
     {
 
-        //.. do some magic here
+        if($repayment->deductionBalance <= 0)
+        {
+
+            //.. do some magic here
+        }
+
 
         return $next($repayment);
     }

@@ -78,7 +78,15 @@ class AdminPanelProvider extends PanelProvider
                 NavigationItem::make("Tinker")
                     ->url("/tinker")
                     ->group("Settings")
-                    ->openUrlInNewTab()
+                    ->openUrlInNewTab(),
+                NavigationItem::make("Log Viewer")
+                    ->url("/log-viewer")
+                    ->group("Settings")
+                    ->openUrlInNewTab(),
+                NavigationItem::make("System Health")
+                    ->url("/pulse")
+                    ->group("Settings")
+                    ->openUrlInNewTab(),
             ])
             ->navigationGroups([
                 NavigationGroup::make("Loans")

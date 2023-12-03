@@ -3,7 +3,11 @@
 namespace App\Library\Traits;
 
 use App\Library\Enums\RepaymentOrderItem;
+use App\Library\Handlers\ProcessLoanRepayment\Deductor\ChargeDeductor;
 use App\Library\Handlers\ProcessLoanRepayment\Deductor\Deductor;
+use App\Library\Handlers\ProcessLoanRepayment\Deductor\InterestDeductor;
+use App\Library\Handlers\ProcessLoanRepayment\Deductor\PenaltyDeductor;
+use App\Library\Handlers\ProcessLoanRepayment\Deductor\PrincipalDeductor;
 use App\Models\LoanProduct;
 
 trait HasRepaymentOrder
@@ -63,7 +67,10 @@ trait HasRepaymentOrder
      */
     protected function getRepaymentOrder(): array
     {
-        return $this->getLoanProduct() ?? $this->defaultRepaymentOrder();
+        $repaymentOrder = $this->getLoanProduct()->repayment_order ?? $this->defaultRepaymentOrder();
+        return is_string($repaymentOrder) ?
+            json_decode($repaymentOrder, true) :
+            $repaymentOrder;
     }
 
     /**
