@@ -69,6 +69,8 @@ class LoanResource extends Resource implements HasShieldPermissions
                     ->label("amount"),
                 TextColumn::make("total_loan")
                     ->money("TZS"),
+                TextColumn::make("outstanding_balance")
+                    ->money("TZS"),
                 TextColumn::make("status")
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {

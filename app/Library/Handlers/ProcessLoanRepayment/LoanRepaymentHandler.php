@@ -43,7 +43,7 @@ class LoanRepaymentHandler
                     ->where("status", "!=", LoanInstallmentStatus::Paid->value)
                     ->get();
 
-                foreach ($this->loan->installments as  $installment) {
+                foreach ($installments as  $installment) {
                     if ($amount <= 0) break;
                     $repayment = Pipeline::send(new Repayment(
                         loanRepaymentData: $loanRepaymentData,

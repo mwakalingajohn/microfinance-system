@@ -111,4 +111,9 @@ class Loan extends Model
     {
         return $this->belongsTo(Organisation::class);
     }
+
+    public function getOutstandingBalanceAttribute()
+    {
+        return $this->installments()->sum("remaining_installment");
+    }
 }
