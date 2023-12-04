@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -34,17 +35,28 @@ class LoanRepaymentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make("loan.loan_code")
+                    ->label("Code"),
+                TextColumn::make("loan.borrower_name")
+                    ->label("Borrower"),
+                TextColumn::make("loan.loan_product_name")
+                    ->label("Loan product"),
+                TextColumn::make("amount")
+                    ->money("TZS")
+                    ->label("Repaid amount"),
+                TextColumn::make("repayment_date")
+                    ->dateTime(),
+                TextColumn::make("status")
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

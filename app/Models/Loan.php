@@ -116,4 +116,9 @@ class Loan extends Model
     {
         return $this->installments()->sum("remaining_installment");
     }
+
+    public function getLoanCodeAttribute()
+    {
+        return $this->id + 11001101;
+    }
 }

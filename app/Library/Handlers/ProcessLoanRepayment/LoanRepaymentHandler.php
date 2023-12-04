@@ -35,6 +35,10 @@ class LoanRepaymentHandler
 
             DB::transaction(function () {
 
+                $this->loanRepayment->update([
+                    "balance_before_repayment"=> $this->loan->outstanding_balance
+                ]);
+
                 $loanRepaymentData = $this->loanRepaymentData;
                 $loanProduct = $this->loan->loanProduct;
                 $amount = $loanRepaymentData["amount"];
@@ -61,7 +65,8 @@ class LoanRepaymentHandler
                 }
 
                 $this->loanRepayment->update([
-                    "status" => LoanRepaymentStatus::Successful->value
+                    "status" => LoanRepaymentStatus::Successful->value,
+                    "balance_after_repayment"=> $this->loan->outstanding_balance
                 ]);
 
                 $this->updateLoanStatus($this->loan);
