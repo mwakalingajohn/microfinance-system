@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -54,13 +55,21 @@ class LoanDisbursementResource extends Resource implements HasShieldPermissions
     {
         return $table
             ->columns([
-                //
+                TextColumn::make("loanApplication.borrower_name")
+                    ->label("Borrower name"),
+                TextColumn::make("loanApplication.loan_product_name")
+                ->label("Loan product"),
+                TextColumn::make("disbursedBy.name"),
+                TextColumn::make("amount")->money("TZS"),
+                TextColumn::make("method")->badge(),
+                TextColumn::make("status"),
+                TextColumn::make("created_at")->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
