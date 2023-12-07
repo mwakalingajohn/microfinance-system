@@ -21,6 +21,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
+use Awcodes\FilamentQuickCreate\QuickCreatePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -30,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('dashboard')
-            ->topNavigation()
+            ->sidebarWidth("240px")
             ->login()
             ->spa()
             ->font("Nunito")
@@ -72,7 +73,8 @@ class AdminPanelProvider extends PanelProvider
                     ->enableTwoFactorAuthentication(
                         force: false,
                     ),
-                \EightyNine\Approvals\ApprovalPlugin::make()
+                \EightyNine\Approvals\ApprovalPlugin::make(),
+                QuickCreatePlugin::make(),
             ])
             ->navigationItems([
                 NavigationItem::make("Tinker")
@@ -92,12 +94,16 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make("Loans")
                     ->icon("heroicon-o-banknotes"),
                 NavigationGroup::make("Reports")
+                    ->collapsed()
                     ->icon("heroicon-s-document-chart-bar"),
                 NavigationGroup::make("Users")
+                    ->collapsed()
                     ->icon("heroicon-o-user-group"),
                 NavigationGroup::make("Configuration")
+                    ->collapsed()
                     ->icon("heroicon-s-cog-8-tooth"),
                 NavigationGroup::make("Settings")
+                    ->collapsed()
                     ->icon("heroicon-o-user-group"),
             ])
             ->colors([

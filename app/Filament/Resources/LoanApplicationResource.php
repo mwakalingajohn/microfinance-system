@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LoanApplicationResource\Pages;
 use App\Filament\Resources\LoanApplicationResource\RelationManagers;
 use App\Library\Enums\InterestPeriod;
+use App\Library\Enums\LoanApplicationStatus;
 use App\Library\Enums\LoanDisbursementMethod;
 use App\Library\Services\LoanService;
 use App\Models\LoanApplication;
@@ -120,6 +121,7 @@ class LoanApplicationResource extends Resource implements HasShieldPermissions
                 ...\EightyNine\Approvals\Tables\Actions\ApprovalActions::make(
                     // define your actions here that will appear once approval is completed
                     Action::make("Disburse")
+                        ->hidden(fn(LoanApplication $record) => $record->status == LoanApplicationStatus::Disbursed->value)
                         ->fillForm(fn (LoanApplication $record): array => [
                             "amount" => $record->amount
                         ])

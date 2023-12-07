@@ -2,9 +2,14 @@
 
 @config 'tailwind.config.js';
 
-:root{
-    font-size: 16px;
+:root {
+    font-size: 15px;
 }
+
 #impersonate-banner {
     z-index: 0 !important;
+}
+
+.fi-sidebar-nav>ul {
+    @apply  !gap-y-2;
 }

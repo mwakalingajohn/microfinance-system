@@ -6,7 +6,9 @@ use App\Library\Enums\MaritalStatus;
 use App\Library\Enums\Occupation;
 use App\Models\Borrower;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Miguilim\FilamentAutoPanel\AutoResource;
+use Illuminate\Contracts\Support\Htmlable;
 
 class BorrowerResource extends AutoResource
 {
@@ -18,6 +20,10 @@ class BorrowerResource extends AutoResource
         "marital_status" => MaritalStatus::data,
         "occupation" => Occupation::data
     ];
+    public static function getGlobalSearchResultTitle(Model $record): string | Htmlable
+    {
+        return $record->name;
+    }
 
     protected static array $visibleColumns = [
         // "user_id",

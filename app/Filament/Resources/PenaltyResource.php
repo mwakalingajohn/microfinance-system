@@ -15,6 +15,10 @@ class PenaltyResource extends AutoResource
 
     protected static ?string $navigationGroup = 'Configuration';
 
+    protected static ?string $recordTitleAttribute = 'label';
+
+    
+
     protected static array $enumDictionary = [
         "on" => Penaltibles::data,
         "after_every" => CalculatablePeriod::data,

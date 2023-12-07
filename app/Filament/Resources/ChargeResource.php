@@ -23,6 +23,8 @@ class ChargeResource extends Resource
     protected static ?string $model = Charge::class;
 
     protected static ?string $navigationGroup = 'Configuration';
+    
+    protected static ?string $recordTitleAttribute = 'label';
 
     public static function form(Form $form): Form
     {

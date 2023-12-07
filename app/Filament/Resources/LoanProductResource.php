@@ -20,6 +20,8 @@ class LoanProductResource extends AutoResource
 
     protected static ?string $navigationGroup = 'Configuration';
 
+    protected static ?string $recordTitleAttribute = 'label';
+
     protected static array $enumDictionary = [
         "interest_period" => InterestPeriod::data,
         "repayment_period" => InterestPeriod::data,

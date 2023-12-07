@@ -65,10 +65,11 @@ class LoanResource extends Resource implements HasShieldPermissions
                 TextColumn::make("loan_code")
                     ->label("Code"),
                 TextColumn::make("borrower.name"),
-                TextColumn::make("loan_product_name"),
-                TextColumn::make("principal")
-                    ->money("TZS")
-                    ->label("amount"),
+                TextColumn::make("loan_product_name")
+                ->label("product"),
+                // TextColumn::make("principal")
+                //     ->money("TZS")
+                //     ->label("amount"),
                 TextColumn::make("total_loan")
                     ->money("TZS"),
                 TextColumn::make("outstanding_balance")

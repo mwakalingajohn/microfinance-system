@@ -13,6 +13,15 @@ class LoanCalculation extends Model
 
     public const LOAN_CALCULATION_DATA_SESSION_KEY = "loan_calculation_session";
 
+    protected $fillable = [
+        'loanBalance',
+        'principal',
+        'interest',
+        'installment',
+        'due_date',
+        'charges',
+    ];
+
     protected $schema = [
         'loanBalance' => "float",
         'principal' => "float",
@@ -27,7 +36,7 @@ class LoanCalculation extends Model
         $loanCalculationData = session(self::LOAN_CALCULATION_DATA_SESSION_KEY, null);
         if ($loanCalculationData) {
             return collect($loanCalculationData->loanInstallments)
-                ->map(fn (Installment $installment) => $installment->toArray())
+                ->map(fn (Installment $installment) => $installment->toArray(false))
                 ->toArray();
         }
         return [];
