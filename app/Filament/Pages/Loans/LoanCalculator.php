@@ -94,8 +94,7 @@ class LoanCalculator extends Page  implements HasForms, HasTable
             ])
             ->bulkActions([
                 // ExportBulkAction::make()
-            ])
-            ->poll('2s');
+            ]);
     }
 
     public function mount(): void

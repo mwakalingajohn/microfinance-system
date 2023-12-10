@@ -23,6 +23,7 @@
         "laravel/pulse": "^1.0@beta",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
+        "leandrocfe/filament-apex-charts": "^3.0",
         "miguilim/filament-auto-panel": "^1.4",
         "opcodesio/log-viewer": "^3.1",
         "owen-it/laravel-auditing": "^13.5",
@@ -85,5 +86,14 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "G:\\Work\\plugins\\filament-reports",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
 }

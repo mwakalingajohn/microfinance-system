@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Filament\Forms\Components\Select;
 use Filament\Support\Facades\FilamentView;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +19,12 @@ class FilamentServiceProvider extends ServiceProvider
         FilamentView::registerRenderHook(
             'panels::body.start',
             fn (): string => Blade::render('<x-impersonate::banner/>'),
+        );
+
+
+        FilamentView::registerRenderHook(
+            'panels::sidebar.footer',
+            fn (): View => view('filament.navigation.footer'),
         );
     }
 

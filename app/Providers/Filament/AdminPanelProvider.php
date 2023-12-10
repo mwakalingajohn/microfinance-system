@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('admin')
+            ->id('dashboard')
             ->path('dashboard')
             ->sidebarWidth("240px")
             ->login()
