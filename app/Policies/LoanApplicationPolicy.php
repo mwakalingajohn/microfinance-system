@@ -53,7 +53,7 @@ class LoanApplicationPolicy
      */
     public function update(User $user, LoanApplication $loanApplication): bool
     {
-        return $user->can('update_loan::application') && !$loanApplication->isSubmitted();
+        return $user->can('update_loan::application');
     }
 
     /**
