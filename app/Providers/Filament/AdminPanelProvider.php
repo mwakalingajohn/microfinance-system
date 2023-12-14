@@ -35,9 +35,6 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->spa()
             ->font("Nunito")
-            ->colors([
-                'primary' => Color::Emerald,
-            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -76,6 +73,7 @@ class AdminPanelProvider extends PanelProvider
                 \EightyNine\Approvals\ApprovalPlugin::make(),
                 QuickCreatePlugin::make(),
                 \EightyNine\Reports\ReportsPlugin::make()
+                    ->navigationGroup("Reports")
             ])
             ->navigationItems([
                 NavigationItem::make("Tinker")

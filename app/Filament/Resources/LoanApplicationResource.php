@@ -93,7 +93,10 @@ class LoanApplicationResource extends Resource implements HasShieldPermissions
                         TextInput::make("number_of_installments")
                             ->numeric()
                             ->label("Repay in")
-                            ->suffix(fn (Get $get) => InterestPeriod::from(LoanProduct::find($get("loan_product_id"))?->repayment_period)->inPlural())
+                            ->suffix(function (Get $get) {
+                                 $suffix = InterestPeriod::from(LoanProduct::find($get("loan_product_id"))?->repayment_period)->inPlural();
+                                 return $suffix;
+                            })
                             ->required(),
                         TextInput::make("interest")
                             ->numeric()
