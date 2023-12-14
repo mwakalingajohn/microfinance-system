@@ -73,7 +73,7 @@ class AdminPanelProvider extends PanelProvider
                 \EightyNine\Approvals\ApprovalPlugin::make(),
                 QuickCreatePlugin::make(),
                 \EightyNine\Reports\ReportsPlugin::make()
-                    ->navigationGroup("Reports")
+                    ->navigationSort(10)
             ])
             ->navigationItems([
                 NavigationItem::make("Tinker")

@@ -14,8 +14,7 @@ use EightyNine\Reports\Components\Image;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Support\Colors\Color;
-use Illuminate\Database\Eloquent\Model;
+use EightyNine\Reports\Components\Body\TextColumn;
 
 class LoanApplicationReport extends \EightyNine\Reports\Report
 {
@@ -57,6 +56,15 @@ class LoanApplicationReport extends \EightyNine\Reports\Report
             ->schema([
                 Table::make()
                     ->data(fn (?array $filters) => $this->getData($filters))
+                    ->columns([
+                        TextColumn::make("sales"),
+                        TextColumn::make("loss")
+                        ->money("TZS"),
+                        TextColumn::make("profit")
+                        ->money("TZS"),
+                        TextColumn::make("date")->dateTime("d/m/Y"),
+                        TextColumn::make("name"),
+                    ])
                     ->useKeysAsHeadings()
                     ->useFirstColumnAsHeadings()
             ]);
@@ -96,74 +104,86 @@ class LoanApplicationReport extends \EightyNine\Reports\Report
             [
                 "name" => "John Doe",
                 "sales" => "100",
-                "profit" => "10",
-                "loss" => "5",
+                "profit" => "100000",
+                "loss" => "50000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "Jane Doe",
                 "sales" => "200",
-                "profit" => "20",
-                "loss" => "10",
+                "profit" => "200000",
+                "loss" => "100000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "John Doe",
                 "sales" => "100",
-                "profit" => "10",
-                "loss" => "5",
+                "profit" => "100000",
+                "loss" => "50000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "Jane Doe",
                 "sales" => "200",
-                "profit" => "20",
-                "loss" => "10",
+                "profit" => "200000",
+                "loss" => "100000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "John Doe",
                 "sales" => "100",
-                "profit" => "10",
-                "loss" => "5",
+                "profit" => "100000",
+                "loss" => "50000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "Jane Doe",
                 "sales" => "200",
-                "profit" => "20",
-                "loss" => "10",
+                "profit" => "200000",
+                "loss" => "100000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "John Doe",
                 "sales" => "100",
-                "profit" => "10",
-                "loss" => "5",
+                "profit" => "100000",
+                "loss" => "50000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "Jane Doe",
                 "sales" => "200",
-                "profit" => "20",
-                "loss" => "10",
+                "profit" => "200000",
+                "loss" => "100000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "John Doe",
                 "sales" => "100",
-                "profit" => "10",
-                "loss" => "5",
+                "profit" => "100000",
+                "loss" => "50000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "Jane Doe",
                 "sales" => "200",
-                "profit" => "20",
-                "loss" => "10",
+                "profit" => "200000",
+                "loss" => "100000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "John Doe",
                 "sales" => "100",
-                "profit" => "10",
-                "loss" => "5",
+                "profit" => "100000",
+                "loss" => "50000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
             [
                 "name" => "Jane Doe",
                 "sales" => "200",
-                "profit" => "20",
-                "loss" => "10",
+                "profit" => "200000",
+                "loss" => "100000",
+                "date" => \Carbon\Carbon::now()->subDays(rand(1, 30))->toDateString(),
             ],
         ])->filter(function ($item) use ($filters) {
             if (isset($filters["min"]) && isset($filters["max"])) {
