@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "113dfec0b85617368130aa957ecc5c5d",
+    "content-hash": "3d27f8180eab8f4832e50b5f2b331377",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -1737,11 +1737,11 @@
         },
         {
             "name": "eightynine/filament-reports",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "G:/Work/plugins/filament-reports",
-                "reference": "f5af2704e98e421fa9948c67042d65c4524897f6"
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "g89:eighty9nine/filament-reports.git",
+                "reference": "30418fd616b7145209e5ff15ee01b590cef654fa"
             },
             "require": {
                 "filament/filament": "^3.0",
@@ -1813,10 +1813,7 @@
                 "issues": "https://github.com/eightynine/filament-reports/issues",
                 "source": "https://github.com/eightynine/filament-reports"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": false
-            }
+            "time": "2023-12-17T05:33:41+00:00"
         },
         {
             "name": "eightynine/filament-sortable-field",
@@ -12259,7 +12256,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "eightynine/filament-reports": 20,
         "laravel/pulse": 10
     },
     "prefer-stable": true,
