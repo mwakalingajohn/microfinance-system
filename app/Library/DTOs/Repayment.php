@@ -9,7 +9,7 @@ use App\Models\LoanRepaymentDetail;
 
 class Repayment
 {
-    public function __construct(        
+    public function __construct(
         public array $loanRepaymentData,
         public LoanProduct $loanProduct,
         public float $deductionBalance,
@@ -48,7 +48,8 @@ class Repayment
         $this->loanRepayment = $loanRepayment;
     }
 
-    public function setDeductionBalance(float $deductionBalance){
+    public function setDeductionBalance(float $deductionBalance): void
+    {
         $this->deductionBalance = $deductionBalance;
     }
 

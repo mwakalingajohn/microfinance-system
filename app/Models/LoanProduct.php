@@ -12,7 +12,20 @@ class LoanProduct extends Model implements Auditable
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
 
-    protected $guarded = [];
+    protected $fillable = [
+        "label",
+        "minimum_principal",
+        "maximum_principal",
+        "default_interest_rate",
+        "minimum_interest_rate",
+        "maximum_interest_rate",
+        "interest_period",
+        "repayment_period",
+        "calculation_method",
+        "due_date_method",
+        "grace_on_interest",
+        "repayment_order",
+    ];
 
     protected $casts = [
         "repayment_order" => "array"
