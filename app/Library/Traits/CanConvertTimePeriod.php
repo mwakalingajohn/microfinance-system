@@ -54,7 +54,7 @@ trait CanConvertTimePeriod
             }
         }
         if ($originCycle == InterestPeriod::Daily) {
-            if ($targetCycle == InterestPeriod::Daily) {
+            if ($targetCycle == InterestPeriod::Yearly) {
                 $period = round($value * 365, 5);
             }
             if ($targetCycle == InterestPeriod::Monthly) {

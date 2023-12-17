@@ -15,9 +15,9 @@ trait HasRepaymentOrder
 
     protected $deductors = [
         RepaymentOrderItem::Charges->value => ChargeDeductor::class,
+        RepaymentOrderItem::Penalties->value => PenaltyDeductor::class,
         RepaymentOrderItem::Interest->value => InterestDeductor::class,
-        RepaymentOrderItem::Principal->value => PrincipalDeductor::class,
-        RepaymentOrderItem::Penalties->value => PenaltyDeductor::class
+        RepaymentOrderItem::Principal->value => PrincipalDeductor::class
     ];
 
     /**

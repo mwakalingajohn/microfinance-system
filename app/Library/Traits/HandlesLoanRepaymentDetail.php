@@ -19,10 +19,10 @@ trait HandlesLoanRepaymentDetail
         $installment = $repayment->getInstallment();
         $loanRepayment = $repayment->getLoanRepayment();
         $loan = $installment->loan;
-        $loanOfficer = $loan->loanOfficer;
-        $borrower = $loan->borrower;
-        $loanProduct = $loan->loanProduct;
-        $organisation = $loan->organisation;
+        $loanOfficer = $loan?->loanOfficer;
+        $borrower = $loan?->borrower;
+        $loanProduct = $loan?->loanProduct;
+        $organisation = $loan?->organisation;
         $repaymentDate = $repayment->getLoanRepaymentData()['repayment_date'];
 
         return LoanRepaymentDetail::create([
@@ -34,9 +34,9 @@ trait HandlesLoanRepaymentDetail
             "loan_product_name" => $loanProduct?->name,
             "organisation_id" => $organisation?->id,
             "organisation_name" => $organisation?->name,
-            "loan_id" => $loan->id,
-            "loan_installment_id" => $installment->id,
-            "loan_repayment_id" => $loanRepayment->id,
+            "loan_id" => $loan?->id,
+            "loan_installment_id" => $installment?->id,
+            "loan_repayment_id" => $loanRepayment?->id,
             "repayment_date" => $repaymentDate
         ]);
     }

@@ -25,7 +25,7 @@ trait HandlesInstallmentDeduction
             $remainingValue :
             $balance;
 
-        // update remaining interest value in the installmentt table
+        // update remaining interest value in the installment table
         $loanInstallment->{$column} = $balance > $remainingValue ?
             0 :
             $remainingValue - $balance;
