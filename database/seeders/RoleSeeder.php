@@ -15,6 +15,7 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $roles = [
+            ["name" => "Super Admin", "slug" => "super_admin", "alias" => "John Mwakalinga"],
             ["name" => "Admin", "slug" => "admin", "alias" => "Steven Samson"],
             ["name" => "Accountant", "slug" => "accountant", "alias" => "Andrew Michael"],
             ["name" => "Loan Officer", "slug" => "loanofficer", "alias" => "Mary Francis"],
@@ -26,7 +27,7 @@ class RoleSeeder extends Seeder
         foreach ($roles as $key => $role) {
 
             if (!Role::where("name", $role["name"])->exists()) {
-                Role::create([
+                Role::firstOrCreate([
                     "name" => $role["name"],
                 ]);
             }
