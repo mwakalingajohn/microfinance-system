@@ -26,6 +26,7 @@ use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class LoanApplicationResource extends Resource implements HasShieldPermissions
 {
@@ -120,7 +121,8 @@ class LoanApplicationResource extends Resource implements HasShieldPermissions
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                ->hidden(fn(?LoanApplication $record)=> $record->isSubmitted()),
                 ...\EightyNine\Approvals\Tables\Actions\ApprovalActions::make(
                     // define your actions here that will appear once approval is completed
                     Action::make("Disburse")
