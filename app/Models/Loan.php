@@ -31,6 +31,11 @@ class Loan extends Model
         "status",
     ];
 
+    public function repayments(): HasMany
+    {
+        return $this->hasMany(LoanRepayment::class);
+    }
+
     /**
      * Get the loanOfficer that owns the Loan
      *

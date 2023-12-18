@@ -222,7 +222,23 @@ class LoanResource extends Resource implements HasShieldPermissions
                                     ])
                             ]),
                         Tab::make("Repayments")
-                            ->schema([])
+                            ->schema([
+                                TableEntry::make("repayments")
+                                ->title("Repayments")
+                                ->columnSpanFull()
+                                ->schema([
+                                    TextEntry::make("amount")
+                                        ->money("TZS"),
+                                    TextEntry::make("repayment_date")
+                                        ->dateTime()
+                                        ->since(),
+                                    TextEntry::make("status"),
+                                    TextEntry::make("balance_before_repayment")
+                                        ->money("TZS"),
+                                    TextEntry::make("balance_after_repayment")
+                                        ->money("TZS"),
+                                ])
+                            ])
                     ])
             ]);
     }
