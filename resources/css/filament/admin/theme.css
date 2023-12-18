@@ -13,3 +13,7 @@
 .fi-sidebar-nav>ul {
     @apply  !gap-y-1;
 }
+
+div.fi-layout > aside.fi-sidebar {
+    padding-top: 0px !important;
+}
