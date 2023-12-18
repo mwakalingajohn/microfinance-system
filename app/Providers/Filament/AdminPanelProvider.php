@@ -73,7 +73,7 @@ class AdminPanelProvider extends PanelProvider
                 QuickCreatePlugin::make()
             ])
             ->navigationItems([
-                NavigationItem::make("Tinkers")
+                NavigationItem::make("Tinker")
                     ->url("/tinker")
                     ->group("Settings")
                     ->openUrlInNewTab(),
