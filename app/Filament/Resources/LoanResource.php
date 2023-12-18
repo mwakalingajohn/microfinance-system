@@ -230,8 +230,7 @@ class LoanResource extends Resource implements HasShieldPermissions
                                     TextEntry::make("amount")
                                         ->money("TZS"),
                                     TextEntry::make("repayment_date")
-                                        ->dateTime()
-                                        ->since(),
+                                        ->dateTime(),
                                     TextEntry::make("status"),
                                     TextEntry::make("balance_before_repayment")
                                         ->money("TZS"),
