@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use Awcodes\FilamentQuickCreate\QuickCreatePlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -11,7 +12,6 @@ use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -21,7 +21,6 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
-use Awcodes\FilamentQuickCreate\QuickCreatePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -74,7 +73,7 @@ class AdminPanelProvider extends PanelProvider
                 QuickCreatePlugin::make()
             ])
             ->navigationItems([
-                NavigationItem::make("Tinker")
+                NavigationItem::make("Tinkers")
                     ->url("/tinker")
                     ->group("Settings")
                     ->openUrlInNewTab(),
